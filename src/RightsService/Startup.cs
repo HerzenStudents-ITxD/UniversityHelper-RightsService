@@ -5,7 +5,6 @@ using HerzenHelper.Core.RedisSupport.Extensions;
 using HealthChecks.UI.Client;
 using HerzenHelper.Core.BrokerSupport.Configurations;
 using HerzenHelper.Core.BrokerSupport.Extensions;
-using HerzenHelper.Core.BrokerSupport.Helpers;
 using HerzenHelper.Core.BrokerSupport.Middlewares.Token;
 using HerzenHelper.Core.Configurations;
 using HerzenHelper.Core.EFSupport.Extensions;
@@ -16,10 +15,8 @@ using HerzenHelper.Core.RedisSupport.Configurations;
 using HerzenHelper.Core.RedisSupport.Constants;
 using HerzenHelper.Core.RedisSupport.Helpers;
 using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
-using HerzenHelper.RightsService.Broker.Consumers;
 using HerzenHelper.RightsService.Data.Provider.MsSql.Ef;
 using HerzenHelper.RightsService.Models.Dto.Configurations;
-using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
@@ -53,10 +50,11 @@ namespace HerzenHelper.RightsService
         .GetSection(BaseRabbitMqConfig.SectionName)
         .Get<RabbitMqConfig>();
 
-      Version = "1.3.9.0";
+      //App.Release.BreakChange.Version
+      Version = "2.0.1.0";
       Description = "RightsService is an API intended to work with the user rights.";
       StartTime = DateTime.UtcNow;
-      ApiName = $"LT Digital Office - {_serviceInfoConfig.Name}";
+      ApiName = $"HerzenHelper - {_serviceInfoConfig.Name}";
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -124,7 +122,7 @@ namespace HerzenHelper.RightsService
 
       _redisConnStr = services.AddRedisSingleton(Configuration);
 
-      ConfigureMassTransit(services);
+      services.ConfigureMassTransit(_rabbitMqConfig);
 
       services
         .AddHealthChecks()
@@ -167,73 +165,5 @@ namespace HerzenHelper.RightsService
         });
       });
     }
-
-    #region configure masstransit
-
-    private void ConfigureMassTransit(IServiceCollection services)
-    {
-      (string username, string password) = RabbitMqCredentialsHelper
-        .Get(_rabbitMqConfig, _serviceInfoConfig);
-
-      services.AddMassTransit(busConfigurator =>
-      {
-        busConfigurator.AddConsumer<CheckUserRightsConsumer>();
-        busConfigurator.AddConsumer<CheckUserAnyRightConsumer>();
-        busConfigurator.AddConsumer<CreateUserRoleConsumer>();
-        busConfigurator.AddConsumer<GetUserRolesConsumer>();
-        busConfigurator.AddConsumer<DisactivateUserRoleConsumer>();
-        busConfigurator.AddConsumer<ActivateUserRoleConsumer>();
-        busConfigurator.AddConsumer<FilterRolesUsersConsumer>();
-
-        busConfigurator.UsingRabbitMq((context, cfg) =>
-        {
-          cfg.Host(_rabbitMqConfig.Host, "/", host =>
-          {
-            host.Username(username);
-            host.Password(password);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.CheckUserRightsEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<CheckUserRightsConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.CheckUserAnyRightEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<CheckUserAnyRightConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.CreateUserRoleEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<CreateUserRoleConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.GetUserRolesEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<GetUserRolesConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.DisactivateUserRoleEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<DisactivateUserRoleConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.ActivateUserRoleEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<ActivateUserRoleConsumer>(context);
-          });
-
-          cfg.ReceiveEndpoint(_rabbitMqConfig.FilterRolesEndpoint, ep =>
-          {
-            ep.ConfigureConsumer<FilterRolesUsersConsumer>(context);
-          });
-        });
-
-        busConfigurator.AddRequestClients(_rabbitMqConfig);
-      });
-
-      services.AddMassTransitHostedService();
-    }
-    #endregion
   }
 }

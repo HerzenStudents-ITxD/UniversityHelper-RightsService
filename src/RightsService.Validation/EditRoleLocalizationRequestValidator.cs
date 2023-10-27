@@ -46,7 +46,7 @@ namespace HerzenHelper.RightsService.Validation
       Context = context;
       RequestedOperation = operation;
 
-      AddСorrectPaths(
+      AddCorrectPaths(
         new List<string>
         {
           nameof(EditRoleLocalizationRequest.Name),
@@ -54,44 +54,44 @@ namespace HerzenHelper.RightsService.Validation
           nameof(EditRoleLocalizationRequest.IsActive)
         });
 
-      AddСorrectOperations(nameof(EditRoleLocalizationRequest.Name), new List<OperationType> { OperationType.Replace });
-      AddСorrectOperations(nameof(EditRoleLocalizationRequest.Description), new List<OperationType> { OperationType.Replace });
-      AddСorrectOperations(nameof(EditRoleLocalizationRequest.IsActive), new List<OperationType> { OperationType.Replace });
+      AddCorrectOperations(nameof(EditRoleLocalizationRequest.Name), new List<OperationType> { OperationType.Replace });
+      AddCorrectOperations(nameof(EditRoleLocalizationRequest.Description), new List<OperationType> { OperationType.Replace });
+      AddCorrectOperations(nameof(EditRoleLocalizationRequest.IsActive), new List<OperationType> { OperationType.Replace });
 
-      await AddFailureForPropertyIfAsync(
-        nameof(EditRoleLocalizationRequest.Name),
-        x => x == OperationType.Replace,
-        new Dictionary<Func<Operation<EditRoleLocalizationRequest>, Task<bool>>, string>
-        {
-          {
-            x => Task.FromResult(!string.IsNullOrEmpty(x.value?.ToString())), "Name can't be empty."
-          },
-          {
-            x => Task.FromResult(x.value.ToString().Trim().Length < 101), "Name is too long."
-          },
-          {
-            async x => !await _roleLocalizationRepository.DoesNameExistAsync(roleLocalization.Locale, x.value.ToString().Trim(), roleLocalization.Id),
-            "Name already exists."
-          }
-        },
-        CascadeMode.Stop);
+      //await AddFailureForPropertyIfNot(
+      //  nameof(EditRoleLocalizationRequest.Name),
+      //  x => x == OperationType.Replace,
+      //  new Dictionary<Func<Operation<EditRoleLocalizationRequest>, Task<bool>>, string>
+      //  {
+      //    {
+      //      x => Task.FromResult(!string.IsNullOrEmpty(x.value?.ToString())), "Name can't be empty."
+      //    },
+      //    {
+      //      x => Task.FromResult(x.value.ToString().Trim().Length < 101), "Name is too long."
+      //    },
+      //    {
+      //      async x => !await _roleLocalizationRepository.DoesNameExistAsync(roleLocalization.Locale, x.value.ToString().Trim(), roleLocalization.Id),
+      //      "Name already exists."
+      //    }
+      //  },
+      //  CascadeMode.Stop);
 
-      await AddFailureForPropertyIfAsync(
-        nameof(EditRoleLocalizationRequest.IsActive),
-        x => x == OperationType.Replace,
-        new Dictionary<Func<Operation<EditRoleLocalizationRequest>, Task<bool>>, string>
-        {
-          {
-            x => Task.FromResult(bool.TryParse(x.value?.ToString(), out _)), "Incorrect isActive format."
-          },
-          {
-            async x => roleLocalization.IsActive
-            || !bool.Parse(x.value.ToString())
-            || !await _roleLocalizationRepository.DoesLocaleExistAsync(roleLocalization.RoleId, roleLocalization.Locale),
-            "Role must have only one localization per locale."
-          }
-        },
-        CascadeMode.Stop);
+      //await AddFailureForPropertyIfNot(
+      //  nameof(EditRoleLocalizationRequest.IsActive),
+      //  x => x == OperationType.Replace,
+      //  new Dictionary<Func<Operation<EditRoleLocalizationRequest>, Task<bool>>, string>
+      //  {
+      //    {
+      //      x => Task.FromResult(bool.TryParse(x.value?.ToString(), out _)), "Incorrect isActive format."
+      //    },
+      //    {
+      //      async x => roleLocalization.IsActive
+      //      || !bool.Parse(x.value.ToString())
+      //      || !await _roleLocalizationRepository.DoesLocaleExistAsync(roleLocalization.RoleId, roleLocalization.Locale),
+      //      "Role must have only one localization per locale."
+      //    }
+      //  },
+      //  CascadeMode.Stop);
     }
 
     public EditRoleLocalizationRequestValidator(

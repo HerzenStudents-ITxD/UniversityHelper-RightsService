@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HerzenHelper.Models.Broker.Models;
+using HerzenHelper.Models.Broker.Models.User;
 using HerzenHelper.RightsService.Mappers.Models.Interfaces;
 using HerzenHelper.RightsService.Mappers.Responses.Interfaces;
 using HerzenHelper.RightsService.Models.Db;

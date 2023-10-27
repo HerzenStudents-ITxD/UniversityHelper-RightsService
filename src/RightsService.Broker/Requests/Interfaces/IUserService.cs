@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HerzenHelper.Core.Attributes;
 using HerzenHelper.Models.Broker.Models;
+using HerzenHelper.Models.Broker.Models.User;
 
 namespace HerzenHelper.RightsService.Broker.Requests.Interfaces
 {

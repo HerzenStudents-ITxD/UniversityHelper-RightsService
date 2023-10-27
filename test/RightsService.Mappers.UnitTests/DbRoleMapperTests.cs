@@ -2,7 +2,7 @@
 using HerzenHelper.RightsService.Mappers.Db.Interfaces;
 using HerzenHelper.RightsService.Models.Db;
 using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.UnitTestCore;
+using HerzenHelper.Core.UnitTestSupport;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;

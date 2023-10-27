@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using HerzenHelper.Core.Responses;
 using HerzenHelper.Models.Broker.Models;
+using HerzenHelper.Models.Broker.Models.User;
 using HerzenHelper.RightsService.Broker.Requests.Interfaces;
 using HerzenHelper.RightsService.Business.Role.Interfaces;
 using HerzenHelper.RightsService.Data.Interfaces;

@@ -2,9 +2,10 @@
 using HerzenHelper.RightsService.Mappers.Models;
 using HerzenHelper.RightsService.Mappers.Models.Interfaces;
 using HerzenHelper.RightsService.Models.Dto.Models;
-using HerzenHelper.UnitTestCore;
+using HerzenHelper.Core.UnitTestSupport;
 using NUnit.Framework;
 using System;
+using HerzenHelper.Models.Broker.Models.User;
 
 namespace HerzenHelper.RightsService.Mappers.UnitTests.Models
 {

@@ -39,7 +39,7 @@ namespace HerzenHelper.RightsService.Business.Commands.User
 
     public async Task<OperationResultResponse<bool>> ExecuteAsync(EditUserRoleRequest request)
     {
-      if (!await _accessValidator.HasRightsAsync(Rights.AddRemoveUsersRoles))
+      if (!await _accessValidator.HasRightsAsync(Rights.AddGetEditRemoveUserRoles))
       {
         return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
       }

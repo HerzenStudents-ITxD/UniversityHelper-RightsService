@@ -8,6 +8,7 @@ using HerzenHelper.Core.RedisSupport.Extensions;
 using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
 using HerzenHelper.Models.Broker.Common;
 using HerzenHelper.Models.Broker.Models;
+using HerzenHelper.Models.Broker.Models.User;
 using HerzenHelper.Models.Broker.Requests.User;
 using HerzenHelper.Models.Broker.Responses.User;
 using HerzenHelper.RightsService.Broker.Requests.Interfaces;

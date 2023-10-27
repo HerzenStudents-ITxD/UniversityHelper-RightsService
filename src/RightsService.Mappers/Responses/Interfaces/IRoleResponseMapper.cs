@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HerzenHelper.Core.Attributes;
 using HerzenHelper.Models.Broker.Models;
+using HerzenHelper.Models.Broker.Models.User;
 using HerzenHelper.RightsService.Models.Db;
 using HerzenHelper.RightsService.Models.Dto.Responses;
 

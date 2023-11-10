@@ -1,11 +1,11 @@
 ﻿using System;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 
-namespace HerzenHelper.RightsService.Mappers.Models
+namespace UniversityHelper.RightsService.Mappers.Models
 {
   public class PatchDbRoleLocalizationMapper : IPatchDbRoleLocalizationMapper
   {

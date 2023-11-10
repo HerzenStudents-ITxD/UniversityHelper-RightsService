@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Business.Commands.Right.Interfaces;
-using HerzenHelper.RightsService.Models.Dto.Models;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Business.Commands.Right.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HerzenHelper.RightsService.Controllers
+namespace UniversityHelper.RightsService.Controllers
 {
   [Route("[controller]")]
   [ApiController]

@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace HerzenHelper.RightsService.Validation.Interfaces
+namespace UniversityHelper.RightsService.Validation.Interfaces
 {
   [AutoInject]
   public interface IEditUserRoleRequestValidator : IValidator<EditUserRoleRequest>

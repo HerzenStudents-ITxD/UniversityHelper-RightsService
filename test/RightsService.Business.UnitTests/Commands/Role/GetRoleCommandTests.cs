@@ -1,16 +1,16 @@
-﻿﻿//using HerzenHelper.Core.Broker;
-//using HerzenHelper.Core.Exceptions.Models;
-//using HerzenHelper.Models.Broker.Models;
-//using HerzenHelper.Models.Broker.Requests.User;
-//using HerzenHelper.Models.Broker.Responses.User;
-//using HerzenHelper.RightsService.Business.Role;
-//using HerzenHelper.RightsService.Business.Role.Interfaces;
-//using HerzenHelper.RightsService.Data.Interfaces;
-//using HerzenHelper.RightsService.Mappers.Interfaces;
-//using HerzenHelper.RightsService.Models.Db;
-//using HerzenHelper.RightsService.Models.Dto.Models;
-//using HerzenHelper.RightsService.Models.Dto.Responses;
-//using HerzenHelper.UnitTestCore;
+﻿﻿//using UniversityHelper.Core.Broker;
+//using UniversityHelper.Core.Exceptions.Models;
+//using UniversityHelper.Models.Broker.Models;
+//using UniversityHelper.Models.Broker.Requests.User;
+//using UniversityHelper.Models.Broker.Responses.User;
+//using UniversityHelper.RightsService.Business.Role;
+//using UniversityHelper.RightsService.Business.Role.Interfaces;
+//using UniversityHelper.RightsService.Data.Interfaces;
+//using UniversityHelper.RightsService.Mappers.Interfaces;
+//using UniversityHelper.RightsService.Models.Db;
+//using UniversityHelper.RightsService.Models.Dto.Models;
+//using UniversityHelper.RightsService.Models.Dto.Responses;
+//using UniversityHelper.UnitTestCore;
 //using MassTransit;
 //using Microsoft.Extensions.Logging;
 //using Moq;
@@ -20,7 +20,7 @@
 //using System.Collections.Generic;
 //using System.Threading.Tasks;
 
-//namespace HerzenHelper.RightsService.Business.Commands.Role
+//namespace UniversityHelper.RightsService.Business.Commands.Role
 //{
 //    class GetRoleCommandTests
 //    {

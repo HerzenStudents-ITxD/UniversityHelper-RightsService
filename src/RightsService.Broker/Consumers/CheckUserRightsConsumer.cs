@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Core.BrokerSupport.AccessValidatorEngine.Requests;
-using HerzenHelper.Core.BrokerSupport.Broker;
-using HerzenHelper.RightsService.Data.Provider;
+using UniversityHelper.Core.BrokerSupport.AccessValidatorEngine.Requests;
+using UniversityHelper.Core.BrokerSupport.Broker;
+using UniversityHelper.RightsService.Data.Provider;
 using MassTransit;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class CheckUserRightsConsumer : IConsumer<ICheckUserRightsRequest>
   {

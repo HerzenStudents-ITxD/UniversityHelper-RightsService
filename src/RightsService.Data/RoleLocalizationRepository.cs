@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Extensions;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Data.Provider;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.Extensions;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Data.Provider;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
-namespace HerzenHelper.RightsService.Data
+namespace UniversityHelper.RightsService.Data
 {
   public class RoleLocalizationRepository : IRoleLocalizationRepository
   {

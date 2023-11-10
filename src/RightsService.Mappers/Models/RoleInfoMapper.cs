@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Models;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace HerzenHelper.RightsService.Mappers.Models
+namespace UniversityHelper.RightsService.Mappers.Models
 {
   public class RoleInfoMapper : IRoleInfoMapper
   {

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Models.Broker.Publishing;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Constants;
+using UniversityHelper.Models.Broker.Publishing;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Constants;
 using MassTransit;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class DisactivateUserRoleConsumer : IConsumer<IDisactivateUserPublish>
   {

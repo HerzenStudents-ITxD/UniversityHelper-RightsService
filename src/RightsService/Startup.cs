@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using HerzenHelper.Core.RedisSupport.Extensions;
+using UniversityHelper.Core.RedisSupport.Extensions;
 using HealthChecks.UI.Client;
-using HerzenHelper.Core.BrokerSupport.Configurations;
-using HerzenHelper.Core.BrokerSupport.Extensions;
-using HerzenHelper.Core.BrokerSupport.Middlewares.Token;
-using HerzenHelper.Core.Configurations;
-using HerzenHelper.Core.EFSupport.Extensions;
-using HerzenHelper.Core.EFSupport.Helpers;
-using HerzenHelper.Core.Extensions;
-using HerzenHelper.Core.Middlewares.ApiInformation;
-using HerzenHelper.Core.RedisSupport.Configurations;
-using HerzenHelper.Core.RedisSupport.Constants;
-using HerzenHelper.Core.RedisSupport.Helpers;
-using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
-using HerzenHelper.RightsService.Data.Provider.MsSql.Ef;
-using HerzenHelper.RightsService.Models.Dto.Configurations;
+using UniversityHelper.Core.BrokerSupport.Configurations;
+using UniversityHelper.Core.BrokerSupport.Extensions;
+using UniversityHelper.Core.BrokerSupport.Middlewares.Token;
+using UniversityHelper.Core.Configurations;
+using UniversityHelper.Core.EFSupport.Extensions;
+using UniversityHelper.Core.EFSupport.Helpers;
+using UniversityHelper.Core.Extensions;
+using UniversityHelper.Core.Middlewares.ApiInformation;
+using UniversityHelper.Core.RedisSupport.Configurations;
+using UniversityHelper.Core.RedisSupport.Constants;
+using UniversityHelper.Core.RedisSupport.Helpers;
+using UniversityHelper.Core.RedisSupport.Helpers.Interfaces;
+using UniversityHelper.RightsService.Data.Provider.MsSql.Ef;
+using UniversityHelper.RightsService.Models.Dto.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 
-namespace HerzenHelper.RightsService
+namespace UniversityHelper.RightsService
 {
   public class Startup : BaseApiInfo
   {
@@ -54,7 +54,7 @@ namespace HerzenHelper.RightsService
       Version = "2.0.1.0";
       Description = "RightsService is an API intended to work with the user rights.";
       StartTime = DateTime.UtcNow;
-      ApiName = $"HerzenHelper - {_serviceInfoConfig.Name}";
+      ApiName = $"UniversityHelper - {_serviceInfoConfig.Name}";
     }
 
     public void ConfigureServices(IServiceCollection services)

@@ -1,4 +1,4 @@
-﻿namespace HerzenHelper.RightsService.Models.Dto.Constants
+﻿namespace UniversityHelper.RightsService.Models.Dto.Constants
 {
   public static class CacheKeys
   {

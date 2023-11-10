@@ -1,12 +1,12 @@
 ﻿using System;
-using HerzenHelper.Core.Extensions;
-using HerzenHelper.Models.Broker.Publishing.Subscriber.Right;
-using HerzenHelper.RightsService.Mappers.Db.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Extensions;
+using UniversityHelper.Models.Broker.Publishing.Subscriber.Right;
+using UniversityHelper.RightsService.Mappers.Db.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.Http;
 
-namespace HerzenHelper.RightsService.Mappers.Db
+namespace UniversityHelper.RightsService.Mappers.Db
 {
   public class DbUserRoleMapper : IDbUserRoleMapper
   {

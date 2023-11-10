@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Data.Provider;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Data.Provider;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.EntityFrameworkCore;
 
-namespace HerzenHelper.RightsService.Data
+namespace UniversityHelper.RightsService.Data
 {
   /// <inheritdoc cref="IRightLocalizationRepository"/>
   public class RightLocalizationRepository : IRightLocalizationRepository

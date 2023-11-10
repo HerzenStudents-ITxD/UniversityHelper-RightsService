@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HerzenHelper.Core.Extensions;
-using HerzenHelper.RightsService.Mappers.Db.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.Extensions;
+using UniversityHelper.RightsService.Mappers.Db.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.AspNetCore.Http;
 
-namespace HerzenHelper.RightsService.Mappers.Db
+namespace UniversityHelper.RightsService.Mappers.Db
 {
   public class DbRoleRightMapper : IDbRoleRightMapper
   {

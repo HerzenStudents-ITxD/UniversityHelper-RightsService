@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FluentValidation;
-using HerzenHelper.RightsService.Validation.Helpers.Interfaces;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.RightsService.Validation.Helpers.Interfaces;
+using UniversityHelper.RightsService.Validation.Interfaces;
 
-namespace HerzenHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation
 {
   public class RightsIdsValidator : AbstractValidator<IEnumerable<int>>, IRightsIdsValidator
   {

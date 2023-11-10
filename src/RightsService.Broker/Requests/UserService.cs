@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Core.BrokerSupport.Helpers;
-using HerzenHelper.Core.RedisSupport.Constants;
-using HerzenHelper.Core.RedisSupport.Extensions;
-using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
-using HerzenHelper.Models.Broker.Common;
-using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.User;
-using HerzenHelper.Models.Broker.Requests.User;
-using HerzenHelper.Models.Broker.Responses.User;
-using HerzenHelper.RightsService.Broker.Requests.Interfaces;
+using UniversityHelper.Core.BrokerSupport.Helpers;
+using UniversityHelper.Core.RedisSupport.Constants;
+using UniversityHelper.Core.RedisSupport.Extensions;
+using UniversityHelper.Core.RedisSupport.Helpers.Interfaces;
+using UniversityHelper.Models.Broker.Common;
+using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.User;
+using UniversityHelper.Models.Broker.Requests.User;
+using UniversityHelper.Models.Broker.Responses.User;
+using UniversityHelper.RightsService.Broker.Requests.Interfaces;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace HerzenHelper.RightsService.Broker.Requests
+namespace UniversityHelper.RightsService.Broker.Requests
 {
   public class UserService : IUserService
   {

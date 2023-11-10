@@ -1,10 +1,10 @@
 ﻿using System;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.Models.Broker.Publishing.Subscriber.Right;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.Models.Broker.Publishing.Subscriber.Right;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace HerzenHelper.RightsService.Mappers.Db.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Db.Interfaces
 {
   [AutoInject]
   public interface IDbUserRoleMapper

@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
 using Moq;
 using NUnit.Framework;
 
-namespace HerzenHelper.RightsService.Validation.UnitTests
+namespace UniversityHelper.RightsService.Validation.UnitTests
 {
   public class CreateRoleRequestValidatorTests
   {

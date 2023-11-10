@@ -1,7 +1,7 @@
-﻿using HerzenHelper.Core.Requests;
+﻿using UniversityHelper.Core.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HerzenHelper.RightsService.Models.Dto.Requests.Filters
+namespace UniversityHelper.RightsService.Models.Dto.Requests.Filters
 {
   public record FindRolesFilter : BaseFindFilter
   {

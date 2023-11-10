@@ -4,15 +4,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Validators;
-using HerzenHelper.Core.Validators;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.Core.Validators;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 
-namespace HerzenHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation
 {
   public class EditRoleLocalizationRequestValidator : ExtendedEditRequestValidator<Guid, EditRoleLocalizationRequest>, IEditRoleLocalizationRequestValidator
   {

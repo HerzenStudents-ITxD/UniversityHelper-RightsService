@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HerzenHelper.RightsService.Models.Db
+namespace UniversityHelper.RightsService.Models.Db
 {
   public class DbRole
   {

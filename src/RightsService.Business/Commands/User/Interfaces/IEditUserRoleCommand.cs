@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace HerzenHelper.RightsService.Business.Commands.User.Interfaces
+namespace UniversityHelper.RightsService.Business.Commands.User.Interfaces
 {
   [AutoInject]
   public interface IEditUserRoleCommand

@@ -2,21 +2,21 @@
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Threading.Tasks;
-//using HerzenHelper.Core.Broker;
-//using HerzenHelper.Core.Exceptions.Models;
-//using HerzenHelper.Models.Broker.Requests.User;
-//using HerzenHelper.Models.Broker.Responses.User;
-//using HerzenHelper.RightsService.Data.Interfaces;
-//using HerzenHelper.RightsService.Data.Provider;
-//using HerzenHelper.RightsService.Data.Provider.MsSql.Ef;
-//using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-//using HerzenHelper.RightsService.Models.Db;
+//using UniversityHelper.Core.Broker;
+//using UniversityHelper.Core.Exceptions.Models;
+//using UniversityHelper.Models.Broker.Requests.User;
+//using UniversityHelper.Models.Broker.Responses.User;
+//using UniversityHelper.RightsService.Data.Interfaces;
+//using UniversityHelper.RightsService.Data.Provider;
+//using UniversityHelper.RightsService.Data.Provider.MsSql.Ef;
+//using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+//using UniversityHelper.RightsService.Models.Db;
 //using MassTransit;
 //using Microsoft.EntityFrameworkCore;
 //using Moq;
 //using NUnit.Framework;
 
-//namespace HerzenHelper.RightsService.Data.UnitTests
+//namespace UniversityHelper.RightsService.Data.UnitTests
 //{
 //  public class CheckRightsRepositoryTests
 //  {

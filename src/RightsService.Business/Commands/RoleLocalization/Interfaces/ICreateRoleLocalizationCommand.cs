@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace HerzenHelper.RightsService.Business.Commands.RoleLocalization.Interfaces
+namespace UniversityHelper.RightsService.Business.Commands.RoleLocalization.Interfaces
 {
   [AutoInject]
   public interface ICreateRoleLocalizationCommand

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HerzenHelper.RightsService.Models.Dto.Requests
+namespace UniversityHelper.RightsService.Models.Dto.Requests
 {
   public record CreateRoleLocalizationRequest
   {

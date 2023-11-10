@@ -1,10 +1,10 @@
-﻿using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Models;
 using NUnit.Framework;
 using System;
 
-namespace HerzenHelper.RightsService.Mappers.UnitTests
+namespace UniversityHelper.RightsService.Mappers.UnitTests
 {
   public class RightsMapperTests
     {

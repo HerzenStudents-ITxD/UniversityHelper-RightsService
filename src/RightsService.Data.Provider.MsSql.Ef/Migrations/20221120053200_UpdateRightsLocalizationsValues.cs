@@ -1,9 +1,9 @@
 ﻿using System;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HerzenHelper.RightsService.Data.Provider.MsSql.Ef.Migrations
+namespace UniversityHelper.RightsService.Data.Provider.MsSql.Ef.Migrations
 {
   [DbContext(typeof(RightsServiceDbContext))]
   [Migration("20221120053200_UpdateRightsLocalizationsValues")]

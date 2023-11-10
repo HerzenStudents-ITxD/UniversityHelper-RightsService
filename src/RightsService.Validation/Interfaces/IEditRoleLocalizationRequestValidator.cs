@@ -1,10 +1,10 @@
 ﻿using System;
 using FluentValidation;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace HerzenHelper.RightsService.Validation.Interfaces
+namespace UniversityHelper.RightsService.Validation.Interfaces
 {
   [AutoInject]
   public interface IEditRoleLocalizationRequestValidator : IValidator<(Guid, JsonPatchDocument<EditRoleLocalizationRequest>)>

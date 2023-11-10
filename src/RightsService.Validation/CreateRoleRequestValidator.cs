@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using FluentValidation;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
 
-namespace HerzenHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation
 {
   public class CreateRoleRequestValidator : AbstractValidator<CreateRoleRequest>, ICreateRoleRequestValidator
   {

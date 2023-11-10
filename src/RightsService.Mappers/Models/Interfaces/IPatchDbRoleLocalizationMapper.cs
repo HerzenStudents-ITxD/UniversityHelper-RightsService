@@ -1,9 +1,9 @@
-﻿using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+﻿using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace HerzenHelper.RightsService.Mappers.Models.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Models.Interfaces
 {
   [AutoInject]
   public interface IPatchDbRoleLocalizationMapper

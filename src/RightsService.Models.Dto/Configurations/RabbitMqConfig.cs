@@ -1,9 +1,9 @@
-﻿using HerzenHelper.Core.BrokerSupport.Attributes;
-using HerzenHelper.Core.BrokerSupport.Configurations;
-using HerzenHelper.Models.Broker.Common;
-using HerzenHelper.Models.Broker.Requests.User;
+﻿using UniversityHelper.Core.BrokerSupport.Attributes;
+using UniversityHelper.Core.BrokerSupport.Configurations;
+using UniversityHelper.Models.Broker.Common;
+using UniversityHelper.Models.Broker.Requests.User;
 
-namespace HerzenHelper.RightsService.Models.Dto.Configurations
+namespace UniversityHelper.RightsService.Models.Dto.Configurations
 {
   public class RabbitMqConfig : BaseRabbitMqConfig
   {

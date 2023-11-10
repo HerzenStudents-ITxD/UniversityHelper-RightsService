@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Core.BrokerSupport.Broker;
-using HerzenHelper.Core.RedisSupport.Configurations;
-using HerzenHelper.Core.RedisSupport.Constants;
-using HerzenHelper.Core.RedisSupport.Extensions;
-using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
-using HerzenHelper.Models.Broker.Models.Right;
-using HerzenHelper.Models.Broker.Requests.Rights;
-using HerzenHelper.Models.Broker.Responses.Rights;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.BrokerSupport.Broker;
+using UniversityHelper.Core.RedisSupport.Configurations;
+using UniversityHelper.Core.RedisSupport.Constants;
+using UniversityHelper.Core.RedisSupport.Extensions;
+using UniversityHelper.Core.RedisSupport.Helpers.Interfaces;
+using UniversityHelper.Models.Broker.Models.Right;
+using UniversityHelper.Models.Broker.Requests.Rights;
+using UniversityHelper.Models.Broker.Responses.Rights;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
 using MassTransit;
 using Microsoft.Extensions.Options;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class FilterRolesUsersConsumer : IConsumer<IFilterRolesRequest>
   {

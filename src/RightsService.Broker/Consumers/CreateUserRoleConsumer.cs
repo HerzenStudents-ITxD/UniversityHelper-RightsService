@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Models.Broker.Publishing.Subscriber.Right;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Mappers.Db.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Constants;
+using UniversityHelper.Models.Broker.Publishing.Subscriber.Right;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Mappers.Db.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Constants;
 using MassTransit;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class CreateUserRoleConsumer : IConsumer<ICreateUserRolePublish>
   {

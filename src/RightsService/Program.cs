@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
 
-namespace HerzenHelper.RightsService
+namespace UniversityHelper.RightsService
 {
     public class Program
     {

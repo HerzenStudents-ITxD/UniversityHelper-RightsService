@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HerzenHelper.Core.Exceptions.Models;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Data.Provider;
-using HerzenHelper.RightsService.Data.Provider.MsSql.Ef;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.Exceptions.Models;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Data.Provider;
+using UniversityHelper.RightsService.Data.Provider.MsSql.Ef;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace HerzenHelper.RightsService.Data.UnitTests
+namespace UniversityHelper.RightsService.Data.UnitTests
 {
   public class RoleRepositoryTests
   {

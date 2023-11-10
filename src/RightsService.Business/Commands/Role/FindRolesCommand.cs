@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using HerzenHelper.Core.FluentValidationExtensions;
-using HerzenHelper.Core.Helpers.Interfaces;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.Core.Validators.Interfaces;
-using HerzenHelper.RightsService.Broker.Requests.Interfaces;
-using HerzenHelper.RightsService.Business.Role.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Models;
-using HerzenHelper.RightsService.Models.Dto.Requests.Filters;
+using UniversityHelper.Core.FluentValidationExtensions;
+using UniversityHelper.Core.Helpers.Interfaces;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.Core.Validators.Interfaces;
+using UniversityHelper.RightsService.Broker.Requests.Interfaces;
+using UniversityHelper.RightsService.Business.Role.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Models;
+using UniversityHelper.RightsService.Models.Dto.Requests.Filters;
 using Microsoft.AspNetCore.Http;
 
-namespace HerzenHelper.RightsService.Business.Role
+namespace UniversityHelper.RightsService.Business.Role
 {
   /// <inheritdoc/>
   public class FindRolesCommand : IFindRolesCommand

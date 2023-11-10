@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using HerzenHelper.Models.Broker.Publishing;
-using HerzenHelper.Core.RedisSupport.Helpers.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
+using UniversityHelper.Models.Broker.Publishing;
+using UniversityHelper.Core.RedisSupport.Helpers.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class ActivateUserRoleConsumer : IConsumer<IActivateUserPublish>
   {

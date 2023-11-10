@@ -1,9 +1,9 @@
-﻿using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.User;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.User;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace HerzenHelper.RightsService.Mappers.Models
+namespace UniversityHelper.RightsService.Mappers.Models
 {
   public class UserInfoMapper : IUserInfoMapper
   {

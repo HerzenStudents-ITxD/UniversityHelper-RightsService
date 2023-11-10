@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Business.Commands.RoleLocalization.Interfaces;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Business.Commands.RoleLocalization.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HerzenHelper.RightsService.Controllers
+namespace UniversityHelper.RightsService.Controllers
 {
   [Route("[controller]")]
   [ApiController]

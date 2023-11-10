@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentValidation;
-using HerzenHelper.Core.Attributes;
+using UniversityHelper.Core.Attributes;
 
-namespace HerzenHelper.RightsService.Validation.Interfaces
+namespace UniversityHelper.RightsService.Validation.Interfaces
 {
   [AutoInject]
   public interface IEditRoleStatusRequestValidator : IValidator<(Guid roleId, bool isActive)>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HerzenHelper.RightsService.Models.Dto.Models
+namespace UniversityHelper.RightsService.Models.Dto.Models
 {
   public record RoleLocalizationInfo
   {

@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.User;
-using HerzenHelper.RightsService.Broker.Requests.Interfaces;
-using HerzenHelper.RightsService.Business.Role.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Mappers.Responses.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests.Filters;
-using HerzenHelper.RightsService.Models.Dto.Responses;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.User;
+using UniversityHelper.RightsService.Broker.Requests.Interfaces;
+using UniversityHelper.RightsService.Business.Role.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Mappers.Responses.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests.Filters;
+using UniversityHelper.RightsService.Models.Dto.Responses;
 using Microsoft.AspNetCore.Http;
 
-namespace HerzenHelper.RightsService.Business.Role
+namespace UniversityHelper.RightsService.Business.Role
 {
   /// <inheritdoc/>
   public class GetRoleCommand : IGetRoleCommand

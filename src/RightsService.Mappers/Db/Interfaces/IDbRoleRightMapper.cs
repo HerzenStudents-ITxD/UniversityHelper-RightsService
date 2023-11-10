@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Db;
 
-namespace HerzenHelper.RightsService.Mappers.Db.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Db.Interfaces
 {
   [AutoInject]
   public interface IDbRoleRightMapper

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using HerzenHelper.Core.BrokerSupport.AccessValidatorEngine.Interfaces;
-using HerzenHelper.Core.Helpers.Interfaces;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Business.Commands.RoleLocalization;
-using HerzenHelper.RightsService.Business.Commands.RoleLocalization.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
-using HerzenHelper.UnitTestCore;
+using UniversityHelper.Core.BrokerSupport.AccessValidatorEngine.Interfaces;
+using UniversityHelper.Core.Helpers.Interfaces;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Business.Commands.RoleLocalization;
+using UniversityHelper.RightsService.Business.Commands.RoleLocalization.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.UnitTestCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
@@ -22,7 +22,7 @@ using Moq.AutoMock;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
-namespace HerzenHelper.RightsService.Business.UnitTests.Commands.RoleLocalization
+namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization
 {
   public class EditRoleLocalizationCommandTests
   {

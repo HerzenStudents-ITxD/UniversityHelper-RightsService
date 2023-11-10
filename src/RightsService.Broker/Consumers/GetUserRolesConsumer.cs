@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Core.BrokerSupport.Broker;
-using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.Right;
-using HerzenHelper.Models.Broker.Requests.Rights;
-using HerzenHelper.Models.Broker.Responses.Rights;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Core.BrokerSupport.Broker;
+using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.Right;
+using UniversityHelper.Models.Broker.Requests.Rights;
+using UniversityHelper.Models.Broker.Responses.Rights;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
 using MassTransit;
 
-namespace HerzenHelper.RightsService.Broker.Consumers
+namespace UniversityHelper.RightsService.Broker.Consumers
 {
   public class GetUserRolesConsumer : IConsumer<IGetUserRolesRequest>
   {

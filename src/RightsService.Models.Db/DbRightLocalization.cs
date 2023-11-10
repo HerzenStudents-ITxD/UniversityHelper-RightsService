@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace HerzenHelper.RightsService.Models.Db
+namespace UniversityHelper.RightsService.Models.Db
 {
     public class DbRightLocalization
     {

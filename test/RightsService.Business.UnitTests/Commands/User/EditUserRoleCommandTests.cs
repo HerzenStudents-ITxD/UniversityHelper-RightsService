@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using FluentValidation.Results;
-using HerzenHelper.Core.BrokerSupport.AccessValidatorEngine.Interfaces;
-using HerzenHelper.Core.Constants;
-using HerzenHelper.Core.Helpers.Interfaces;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Business.Commands.User;
-using HerzenHelper.RightsService.Business.Commands.User.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Mappers.Db.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
-using HerzenHelper.UnitTestCore;
+using UniversityHelper.Core.BrokerSupport.AccessValidatorEngine.Interfaces;
+using UniversityHelper.Core.Constants;
+using UniversityHelper.Core.Helpers.Interfaces;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Business.Commands.User;
+using UniversityHelper.RightsService.Business.Commands.User.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Mappers.Db.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.UnitTestCore;
 using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
 
-namespace HerzenHelper.RightsService.Business.UnitTests.Commands.User
+namespace UniversityHelper.RightsService.Business.UnitTests.Commands.User
 {
   public class EditUserRoleCommandTests
   {

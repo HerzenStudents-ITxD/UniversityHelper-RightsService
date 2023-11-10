@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HerzenHelper.Models.Broker.Publishing;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Models.Broker.Publishing;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Db;
 
-namespace HerzenHelper.RightsService.Data.Interfaces
+namespace UniversityHelper.RightsService.Data.Interfaces
 {
   [AutoInject]
   public interface IUserRoleRepository

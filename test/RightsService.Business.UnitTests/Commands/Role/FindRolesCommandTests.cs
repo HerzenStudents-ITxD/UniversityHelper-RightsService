@@ -1,11 +1,11 @@
-﻿using HerzenHelper.RightsService.Business.Role.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.RightsService.Business.Role.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Models;
 using Moq.AutoMock;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace HerzenHelper.RightsService.Business.Commands.Role
+namespace UniversityHelper.RightsService.Business.Commands.Role
 {
     class FindRolesCommandTests
     {

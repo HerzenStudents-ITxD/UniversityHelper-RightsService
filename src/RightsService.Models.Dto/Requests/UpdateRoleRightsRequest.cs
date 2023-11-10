@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HerzenHelper.RightsService.Models.Dto.Requests
+namespace UniversityHelper.RightsService.Models.Dto.Requests
 {
   public class UpdateRoleRightsRequest
   {

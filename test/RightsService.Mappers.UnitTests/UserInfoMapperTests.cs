@@ -1,13 +1,13 @@
-﻿using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.RightsService.Mappers.Models;
-using HerzenHelper.RightsService.Mappers.Models.Interfaces;
-using HerzenHelper.RightsService.Models.Dto.Models;
-using HerzenHelper.Core.UnitTestSupport;
+﻿using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.RightsService.Mappers.Models;
+using UniversityHelper.RightsService.Mappers.Models.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Models;
+using UniversityHelper.Core.UnitTestSupport;
 using NUnit.Framework;
 using System;
-using HerzenHelper.Models.Broker.Models.User;
+using UniversityHelper.Models.Broker.Models.User;
 
-namespace HerzenHelper.RightsService.Mappers.UnitTests.Models
+namespace UniversityHelper.RightsService.Mappers.UnitTests.Models
 {
   class UserInfoMapperTests
     {

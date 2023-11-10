@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentValidation;
-using HerzenHelper.RightsService.Broker.Requests.Interfaces;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.RightsService.Broker.Requests.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.RightsService.Validation.Interfaces;
 
-namespace HerzenHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation
 {
   public class EditUserRoleRequestValidator : AbstractValidator<EditUserRoleRequest>, IEditUserRoleRequestValidator
   {

@@ -1,10 +1,10 @@
-﻿using HerzenHelper.RightsService.Broker.Consumers;
-using HerzenHelper.RightsService.Data.Interfaces;
+﻿using UniversityHelper.RightsService.Broker.Consumers;
+using UniversityHelper.RightsService.Data.Interfaces;
 using MassTransit.Testing;
 using Moq;
 using System;
 
-namespace HerzenHelper.RightsService.Broker.UnitTests.Consumers
+namespace UniversityHelper.RightsService.Broker.UnitTests.Consumers
 {
     class AccessValidatorConsumerTests
     {

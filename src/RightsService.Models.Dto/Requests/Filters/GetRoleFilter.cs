@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace HerzenHelper.RightsService.Models.Dto.Requests.Filters
+namespace UniversityHelper.RightsService.Models.Dto.Requests.Filters
 {
     public record GetRoleFilter
     {

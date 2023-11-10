@@ -1,10 +1,10 @@
-﻿using HerzenHelper.Core.Attributes;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.Core.Attributes;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Models.Dto.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HerzenHelper.RightsService.Business.Commands.Right.Interfaces
+namespace UniversityHelper.RightsService.Business.Commands.Right.Interfaces
 {
   /// <summary>
   /// Represents the command pattern.

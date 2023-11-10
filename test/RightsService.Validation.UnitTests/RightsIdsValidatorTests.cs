@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using System.Collections.Generic;
 
-namespace HerzenHelper.RightsService.Validation.UnitTests
+namespace UniversityHelper.RightsService.Validation.UnitTests
 {
   public class RightsIdsValidatorTests
     {

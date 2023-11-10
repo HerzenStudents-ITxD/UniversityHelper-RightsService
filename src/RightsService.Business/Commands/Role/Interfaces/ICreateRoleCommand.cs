@@ -1,10 +1,10 @@
-﻿using HerzenHelper.Core.Attributes;
-using HerzenHelper.Core.Responses;
-using HerzenHelper.RightsService.Models.Dto.Requests;
+﻿using UniversityHelper.Core.Attributes;
+using UniversityHelper.Core.Responses;
+using UniversityHelper.RightsService.Models.Dto.Requests;
 using System;
 using System.Threading.Tasks;
 
-namespace HerzenHelper.RightsService.Business.Role.Interfaces
+namespace UniversityHelper.RightsService.Business.Role.Interfaces
 {
   /// <summary>
   /// Represents interface for a command in command pattern.

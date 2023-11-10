@@ -1,9 +1,9 @@
-﻿using HerzenHelper.Core.Attributes;
-using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.User;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.Core.Attributes;
+using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.User;
+using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace HerzenHelper.RightsService.Mappers.Models.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Models.Interfaces
 {
   [AutoInject]
   public interface IUserInfoMapper

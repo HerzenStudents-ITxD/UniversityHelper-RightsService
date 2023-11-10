@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using HerzenHelper.Core.Attributes;
-using HerzenHelper.Models.Broker.Models;
-using HerzenHelper.Models.Broker.Models.User;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Responses;
+using UniversityHelper.Core.Attributes;
+using UniversityHelper.Models.Broker.Models;
+using UniversityHelper.Models.Broker.Models.User;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Responses;
 
-namespace HerzenHelper.RightsService.Mappers.Responses.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Responses.Interfaces
 {
   [AutoInject]
   public interface IRoleResponseMapper

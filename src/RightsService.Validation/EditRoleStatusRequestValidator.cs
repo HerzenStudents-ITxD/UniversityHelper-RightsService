@@ -4,12 +4,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Validators;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Validation.Helpers.Interfaces;
-using HerzenHelper.RightsService.Validation.Interfaces;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Validation.Helpers.Interfaces;
+using UniversityHelper.RightsService.Validation.Interfaces;
 
-namespace HerzenHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation
 {
   public class EditRoleStatusRequestValidator : AbstractValidator<(Guid roleId, bool isActive)>, IEditRoleStatusRequestValidator
   {

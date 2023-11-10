@@ -1,15 +1,15 @@
-﻿using HerzenHelper.RightsService.Mappers.Db;
-using HerzenHelper.RightsService.Mappers.Db.Interfaces;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Requests;
-using HerzenHelper.Core.UnitTestSupport;
+﻿using UniversityHelper.RightsService.Mappers.Db;
+using UniversityHelper.RightsService.Mappers.Db.Interfaces;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Requests;
+using UniversityHelper.Core.UnitTestSupport;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-namespace HerzenHelper.RightsService.Mappers.RequestsMappers.UnitTests
+namespace UniversityHelper.RightsService.Mappers.RequestsMappers.UnitTests
 {
   internal class DbRoleMapperTests
     {

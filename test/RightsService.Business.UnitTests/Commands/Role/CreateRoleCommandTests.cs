@@ -1,14 +1,14 @@
-﻿//using HerzenHelper.Core.AccessValidatorEngine.Interfaces;
-//using HerzenHelper.Core.Enums;
-//using HerzenHelper.Core.Responses;
-//using HerzenHelper.RightsService.Business.Role.Interfaces;
-//using HerzenHelper.RightsService.Business.Role;
-//using HerzenHelper.RightsService.Data.Interfaces;
-//using HerzenHelper.RightsService.Data.Provider;
-//using HerzenHelper.RightsService.Mappers.Interfaces;
-//using HerzenHelper.RightsService.Models.Db;
-//using HerzenHelper.RightsService.Models.Dto;
-//using HerzenHelper.RightsService.Validation.Interfaces;
+﻿//using UniversityHelper.Core.AccessValidatorEngine.Interfaces;
+//using UniversityHelper.Core.Enums;
+//using UniversityHelper.Core.Responses;
+//using UniversityHelper.RightsService.Business.Role.Interfaces;
+//using UniversityHelper.RightsService.Business.Role;
+//using UniversityHelper.RightsService.Data.Interfaces;
+//using UniversityHelper.RightsService.Data.Provider;
+//using UniversityHelper.RightsService.Mappers.Interfaces;
+//using UniversityHelper.RightsService.Models.Db;
+//using UniversityHelper.RightsService.Models.Dto;
+//using UniversityHelper.RightsService.Validation.Interfaces;
 //using Microsoft.AspNetCore.Http;
 //using Moq;
 //using Moq.AutoMock;
@@ -16,7 +16,7 @@
 //using System;
 //using System.Collections.Generic;
 
-//namespace HerzenHelper.RightsService.Business.UnitTests.Commands.Role
+//namespace UniversityHelper.RightsService.Business.UnitTests.Commands.Role
 //{
 //    internal class CreateRoleCommandTests
 //    {

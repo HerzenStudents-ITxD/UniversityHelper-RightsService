@@ -1,8 +1,8 @@
-﻿using HerzenHelper.Core.Attributes;
-using HerzenHelper.RightsService.Models.Db;
-using HerzenHelper.RightsService.Models.Dto.Models;
+﻿using UniversityHelper.Core.Attributes;
+using UniversityHelper.RightsService.Models.Db;
+using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace HerzenHelper.RightsService.Mappers.Models.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Models.Interfaces
 {
   [AutoInject]
   public interface IRightInfoMapper

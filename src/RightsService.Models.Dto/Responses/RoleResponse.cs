@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using HerzenHelper.RightsService.Models.Dto.Models;
+using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace HerzenHelper.RightsService.Models.Dto.Responses
+namespace UniversityHelper.RightsService.Models.Dto.Responses
 {
   public record RoleResponse
   {

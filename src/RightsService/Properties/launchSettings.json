@@ -2,10 +2,26 @@
   "profiles": {
     "RightsService": {
       "commandName": "Project",
-      "externalUrlConfiguration": true,
+      "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "RabbitMqUsername": "guest",
+        "RabbitMqPassword": "guest"
+      },
+      "externalUrlConfiguration": true,
+      "applicationUrl": "http://localhost:9802"
     }
   }
 }
+
+//{
+//  "profiles": {
+//    "RightsService": {
+//      "commandName": "Project",
+//      "externalUrlConfiguration": true,
+//      "environmentVariables": {
+//        "ASPNETCORE_ENVIRONMENT": "Development"
+//      }
+//    }
+//  }
+//}

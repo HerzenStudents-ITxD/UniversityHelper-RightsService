@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HerzenHelper.RightsService.Validation.Helpers.Interfaces;
+using UniversityHelper.RightsService.Validation.Helpers.Interfaces;
 
-namespace HerzenHelper.RightsService.Validation.Helpers
+namespace UniversityHelper.RightsService.Validation.Helpers
 {
   public class CheckRightsUniquenessHelper : ICheckRightsUniquenessHelper
   {

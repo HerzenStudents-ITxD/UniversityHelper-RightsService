@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HerzenHelper.Core.Attributes;
+using UniversityHelper.Core.Attributes;
 
-namespace HerzenHelper.RightsService.Validation.Helpers.Interfaces
+namespace UniversityHelper.RightsService.Validation.Helpers.Interfaces
 {
   [AutoInject]
   public interface IMemoryCacheHelper

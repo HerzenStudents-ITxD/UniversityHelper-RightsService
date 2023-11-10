@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HerzenHelper.Models.Broker.Publishing;
-using HerzenHelper.Core.Extensions;
-using HerzenHelper.RightsService.Data.Interfaces;
-using HerzenHelper.RightsService.Data.Provider;
-using HerzenHelper.RightsService.Models.Db;
+using UniversityHelper.Models.Broker.Publishing;
+using UniversityHelper.Core.Extensions;
+using UniversityHelper.RightsService.Data.Interfaces;
+using UniversityHelper.RightsService.Data.Provider;
+using UniversityHelper.RightsService.Models.Db;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace HerzenHelper.RightsService.Data
+namespace UniversityHelper.RightsService.Data
 {
   public class UserRoleRepository : IUserRoleRepository
   {

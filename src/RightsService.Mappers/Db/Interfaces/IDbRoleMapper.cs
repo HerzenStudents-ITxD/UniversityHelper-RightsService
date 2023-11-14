@@ -2,11 +2,10 @@
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace UniversityHelper.RightsService.Mappers.Db.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Db.Interfaces;
+
+[AutoInject]
+public interface IDbRoleMapper
 {
-  [AutoInject]
-  public interface IDbRoleMapper
-  {
-    DbRole Map(CreateRoleRequest value);
-  }
+  DbRole Map(CreateRoleRequest value);
 }

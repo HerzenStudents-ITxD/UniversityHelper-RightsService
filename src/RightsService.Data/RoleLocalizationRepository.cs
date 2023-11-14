@@ -8,70 +8,69 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 
-namespace UniversityHelper.RightsService.Data
+namespace UniversityHelper.RightsService.Data;
+
+public class RoleLocalizationRepository : IRoleLocalizationRepository
 {
-  public class RoleLocalizationRepository : IRoleLocalizationRepository
+  private readonly IDataProvider _provider;
+  private readonly IHttpContextAccessor _httpContextAccessor;
+
+  public RoleLocalizationRepository(
+    IDataProvider provider,
+    IHttpContextAccessor httpContextAccessor)
   {
-    private readonly IDataProvider _provider;
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    _provider = provider;
+    _httpContextAccessor = httpContextAccessor;
+  }
 
-    public RoleLocalizationRepository(
-      IDataProvider provider,
-      IHttpContextAccessor httpContextAccessor)
+  public async Task<Guid?> CreateAsync(DbRoleLocalization roleLocalization)
+  {
+    if (roleLocalization is null)
     {
-      _provider = provider;
-      _httpContextAccessor = httpContextAccessor;
+      return null;
     }
 
-    public async Task<Guid?> CreateAsync(DbRoleLocalization roleLocalization)
+    _provider.RolesLocalizations.Add(roleLocalization);
+    await _provider.SaveAsync();
+
+    return roleLocalization.Id;
+  }
+
+  public async Task<bool> DoesNameExistAsync(string locale, string name, Guid id = default)
+  {
+    return await _provider.RolesLocalizations.AnyAsync(rl => rl.Id != id && rl.IsActive && rl.Locale == locale && rl.Name == name);
+  }
+
+  public async Task<bool> DoesLocaleExistAsync(Guid roleId, string locale)
+  {
+    return await _provider.RolesLocalizations.AnyAsync(rl => rl.IsActive && rl.RoleId == roleId && rl.Locale == locale);
+  }
+
+  public async Task<DbRoleLocalization> GetAsync(Guid roleLocalizationId)
+  {
+    return await _provider.RolesLocalizations.FirstOrDefaultAsync(x => x.Id == roleLocalizationId);
+  }
+
+  public async Task<bool> EditRoleLocalizationAsync(Guid roleLocalizationId, JsonPatchDocument<DbRoleLocalization> patch)
+  {
+    if (patch == null)
     {
-      if (roleLocalization is null)
-      {
-        return null;
-      }
-
-      _provider.RolesLocalizations.Add(roleLocalization);
-      await _provider.SaveAsync();
-
-      return roleLocalization.Id;
+      return false;
     }
 
-    public async Task<bool> DoesNameExistAsync(string locale, string name, Guid id = default)
+    DbRoleLocalization roleLocalization = await _provider.RolesLocalizations.FirstOrDefaultAsync(x => x.Id == roleLocalizationId);
+
+    if (roleLocalization == default)
     {
-      return await _provider.RolesLocalizations.AnyAsync(rl => rl.Id != id && rl.IsActive && rl.Locale == locale && rl.Name == name);
+      return false;
     }
 
-    public async Task<bool> DoesLocaleExistAsync(Guid roleId, string locale)
-    {
-     return await _provider.RolesLocalizations.AnyAsync(rl => rl.IsActive && rl.RoleId == roleId && rl.Locale == locale);
-    }
+    patch.ApplyTo(roleLocalization);
+    roleLocalization.ModifiedBy = _httpContextAccessor.HttpContext.GetUserId();
+    roleLocalization.ModifiedAtUtc = DateTime.UtcNow;
 
-    public async Task<DbRoleLocalization> GetAsync(Guid roleLocalizationId)
-    {
-      return await _provider.RolesLocalizations.FirstOrDefaultAsync(x => x.Id == roleLocalizationId);
-    }
+    await _provider.SaveAsync();
 
-    public async Task<bool> EditRoleLocalizationAsync(Guid roleLocalizationId, JsonPatchDocument<DbRoleLocalization> patch)
-    {
-      if (patch == null)
-      {
-        return false;
-      }
-
-      DbRoleLocalization roleLocalization = await _provider.RolesLocalizations.FirstOrDefaultAsync(x => x.Id == roleLocalizationId);
-
-      if (roleLocalization == default)
-      {
-        return false;
-      }
-
-      patch.ApplyTo(roleLocalization);
-      roleLocalization.ModifiedBy = _httpContextAccessor.HttpContext.GetUserId();
-      roleLocalization.ModifiedAtUtc = DateTime.UtcNow;
-
-      await _provider.SaveAsync();
-
-      return true;
-    }
+    return true;
   }
 }

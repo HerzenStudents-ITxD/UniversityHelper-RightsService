@@ -25,145 +25,144 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 
-namespace UniversityHelper.RightsService
+namespace UniversityHelper.RightsService;
+
+public class Startup : BaseApiInfo
 {
-  public class Startup : BaseApiInfo
+  public const string CorsPolicyName = "LtDoCorsPolicy";
+
+  private readonly BaseServiceInfoConfig _serviceInfoConfig;
+  private readonly RabbitMqConfig _rabbitMqConfig;
+
+  private string _redisConnStr;
+
+  public IConfiguration Configuration { get; }
+
+  public Startup(IConfiguration configuration)
   {
-    public const string CorsPolicyName = "LtDoCorsPolicy";
+    Configuration = configuration;
 
-    private readonly BaseServiceInfoConfig _serviceInfoConfig;
-    private readonly RabbitMqConfig _rabbitMqConfig;
+    _serviceInfoConfig = Configuration
+      .GetSection(BaseServiceInfoConfig.SectionName)
+      .Get<BaseServiceInfoConfig>();
 
-    private string _redisConnStr;
+    _rabbitMqConfig = Configuration
+      .GetSection(BaseRabbitMqConfig.SectionName)
+      .Get<RabbitMqConfig>();
 
-    public IConfiguration Configuration { get; }
+    //App.Release.BreakChange.Version
+    Version = "2.0.1.0";
+    Description = "RightsService is an API intended to work with the user rights.";
+    StartTime = DateTime.UtcNow;
+    ApiName = $"UniversityHelper - {_serviceInfoConfig.Name}";
+  }
 
-    public Startup(IConfiguration configuration)
+  public void ConfigureServices(IServiceCollection services)
+  {
+    services.AddCors(options =>
     {
-      Configuration = configuration;
-
-      _serviceInfoConfig = Configuration
-        .GetSection(BaseServiceInfoConfig.SectionName)
-        .Get<BaseServiceInfoConfig>();
-
-      _rabbitMqConfig = Configuration
-        .GetSection(BaseRabbitMqConfig.SectionName)
-        .Get<RabbitMqConfig>();
-
-      //App.Release.BreakChange.Version
-      Version = "2.0.1.0";
-      Description = "RightsService is an API intended to work with the user rights.";
-      StartTime = DateTime.UtcNow;
-      ApiName = $"UniversityHelper - {_serviceInfoConfig.Name}";
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddCors(options =>
-      {
-        options.AddPolicy(
-          CorsPolicyName,
-            builder =>
-            {
-              builder
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-            });
-      });
-
-      services.Configure<TokenConfiguration>(Configuration.GetSection("CheckTokenMiddleware"));
-      services.Configure<BaseRabbitMqConfig>(Configuration.GetSection(BaseRabbitMqConfig.SectionName));
-      services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));
-
-      services.AddHttpContextAccessor();
-      services.AddMemoryCache();
-      services.AddControllers()
-        .AddJsonOptions(options =>
-        {
-          options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        })
-        .AddNewtonsoftJson();
-
-      string dbConnectionString = ConnectionStringHandler.Get(Configuration);
-
-      services.AddDbContext<RightsServiceDbContext>(options =>
-      {
-        options.UseSqlServer(dbConnectionString);
-      });
-
-      if (int.TryParse(Environment.GetEnvironmentVariable("MemoryCacheLiveInMinutes"), out int memoryCacheLifetime))
-      {
-        services.Configure<MemoryCacheConfig>(options =>
-        {
-          options.CacheLiveInMinutes = memoryCacheLifetime;
-        });
-      }
-      else
-      {
-        services.Configure<MemoryCacheConfig>(Configuration.GetSection(MemoryCacheConfig.SectionName));
-      }
-
-      if (int.TryParse(Environment.GetEnvironmentVariable("RedisCacheLiveInMinutes"), out int redisCacheLifeTime))
-      {
-        services.Configure<RedisConfig>(options =>
-        {
-          options.CacheLiveInMinutes = redisCacheLifeTime;
-        });
-      }
-      else
-      {
-        services.Configure<RedisConfig>(Configuration.GetSection(RedisConfig.SectionName));
-      }
-
-      services.AddBusinessObjects();
-      services.AddTransient<IRedisHelper, RedisHelper>();
-      services.AddTransient<ICacheNotebook, CacheNotebook>();
-
-      _redisConnStr = services.AddRedisSingleton(Configuration);
-
-      services.ConfigureMassTransit(_rabbitMqConfig);
-
-      services
-        .AddHealthChecks()
-        .AddSqlServer(dbConnectionString)
-        .AddRabbitMqCheck();
-    }
-
-    public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
-    {
-      app.UpdateDatabase<RightsServiceDbContext>();
-
-      FlushRedisDbHelper.FlushDatabase(_redisConnStr, Cache.Rights);
-
-      app.UseForwardedHeaders();
-
-      app.UseExceptionsHandler(loggerFactory);
-
-      app.UseApiInformation();
-
-      app.UseRouting();
-
-      app.UseMiddleware<TokenMiddleware>();
-
-      app.UseCors(CorsPolicyName);
-
-      app.UseEndpoints(endpoints =>
-      {
-        endpoints.MapControllers().RequireCors(CorsPolicyName);
-
-        endpoints.MapHealthChecks($"/{_serviceInfoConfig.Id}/hc", new HealthCheckOptions
-        {
-          ResultStatusCodes = new Dictionary<HealthStatus, int>
+      options.AddPolicy(
+        CorsPolicyName,
+          builder =>
           {
-            { HealthStatus.Unhealthy, 200 },
-            { HealthStatus.Healthy, 200 },
-            { HealthStatus.Degraded, 200 },
-          },
-          Predicate = check => check.Name != "masstransit-bus",
-          ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
+            builder
+              .AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+          });
+    });
+
+    services.Configure<TokenConfiguration>(Configuration.GetSection("CheckTokenMiddleware"));
+    services.Configure<BaseRabbitMqConfig>(Configuration.GetSection(BaseRabbitMqConfig.SectionName));
+    services.Configure<BaseServiceInfoConfig>(Configuration.GetSection(BaseServiceInfoConfig.SectionName));
+
+    services.AddHttpContextAccessor();
+    services.AddMemoryCache();
+    services.AddControllers()
+      .AddJsonOptions(options =>
+      {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+      })
+      .AddNewtonsoftJson();
+
+    string dbConnectionString = ConnectionStringHandler.Get(Configuration);
+
+    services.AddDbContext<RightsServiceDbContext>(options =>
+    {
+      options.UseSqlServer(dbConnectionString);
+    });
+
+    if (int.TryParse(Environment.GetEnvironmentVariable("MemoryCacheLiveInMinutes"), out int memoryCacheLifetime))
+    {
+      services.Configure<MemoryCacheConfig>(options =>
+      {
+        options.CacheLiveInMinutes = memoryCacheLifetime;
       });
     }
+    else
+    {
+      services.Configure<MemoryCacheConfig>(Configuration.GetSection(MemoryCacheConfig.SectionName));
+    }
+
+    if (int.TryParse(Environment.GetEnvironmentVariable("RedisCacheLiveInMinutes"), out int redisCacheLifeTime))
+    {
+      services.Configure<RedisConfig>(options =>
+      {
+        options.CacheLiveInMinutes = redisCacheLifeTime;
+      });
+    }
+    else
+    {
+      services.Configure<RedisConfig>(Configuration.GetSection(RedisConfig.SectionName));
+    }
+
+    services.AddBusinessObjects();
+    services.AddTransient<IRedisHelper, RedisHelper>();
+    services.AddTransient<ICacheNotebook, CacheNotebook>();
+
+    _redisConnStr = services.AddRedisSingleton(Configuration);
+
+    services.ConfigureMassTransit(_rabbitMqConfig);
+
+    services
+      .AddHealthChecks()
+      .AddSqlServer(dbConnectionString)
+      .AddRabbitMqCheck();
+  }
+
+  public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+  {
+    app.UpdateDatabase<RightsServiceDbContext>();
+
+    FlushRedisDbHelper.FlushDatabase(_redisConnStr, Cache.Rights);
+
+    app.UseForwardedHeaders();
+
+    app.UseExceptionsHandler(loggerFactory);
+
+    app.UseApiInformation();
+
+    app.UseRouting();
+
+    app.UseMiddleware<TokenMiddleware>();
+
+    app.UseCors(CorsPolicyName);
+
+    app.UseEndpoints(endpoints =>
+    {
+      endpoints.MapControllers().RequireCors(CorsPolicyName);
+
+      endpoints.MapHealthChecks($"/{_serviceInfoConfig.Id}/hc", new HealthCheckOptions
+      {
+        ResultStatusCodes = new Dictionary<HealthStatus, int>
+        {
+          { HealthStatus.Unhealthy, 200 },
+          { HealthStatus.Healthy, 200 },
+          { HealthStatus.Degraded, 200 },
+        },
+        Predicate = check => check.Name != "masstransit-bus",
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+      });
+    });
   }
 }

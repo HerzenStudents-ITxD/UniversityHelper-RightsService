@@ -3,28 +3,27 @@ using FluentValidation;
 using UniversityHelper.RightsService.Validation.Helpers.Interfaces;
 using UniversityHelper.RightsService.Validation.Interfaces;
 
-namespace UniversityHelper.RightsService.Validation
+namespace UniversityHelper.RightsService.Validation;
+
+public class RightsIdsValidator : AbstractValidator<IEnumerable<int>>, IRightsIdsValidator
 {
-  public class RightsIdsValidator : AbstractValidator<IEnumerable<int>>, IRightsIdsValidator
+  private readonly IMemoryCacheHelper _memoryCacheHelper;
+  private readonly ICheckRightsUniquenessHelper _checkRightsUniquenessHelper;
+
+  public RightsIdsValidator(
+    IMemoryCacheHelper memoryCacheHelper,
+    ICheckRightsUniquenessHelper checkRightsUniquenessHelper)
   {
-    private readonly IMemoryCacheHelper _memoryCacheHelper;
-    private readonly ICheckRightsUniquenessHelper _checkRightsUniquenessHelper;
+    _memoryCacheHelper = memoryCacheHelper;
+    _checkRightsUniquenessHelper = checkRightsUniquenessHelper;
 
-    public RightsIdsValidator(
-      IMemoryCacheHelper memoryCacheHelper,
-      ICheckRightsUniquenessHelper checkRightsUniquenessHelper)
-    {
-      _memoryCacheHelper = memoryCacheHelper;
-      _checkRightsUniquenessHelper = checkRightsUniquenessHelper;
+    RuleFor(rightsIds => rightsIds)
+      .NotEmpty().WithMessage("Rights list can not be empty.")
+      .MustAsync(async (rightIds, _) => await _checkRightsUniquenessHelper.IsRightsSetUniqueAsync(rightIds))
+      .WithMessage("Set of rights must be unique.");
 
-      RuleFor(rightsIds => rightsIds)
-        .NotEmpty().WithMessage("Rights list can not be empty.")
-        .MustAsync(async (rightIds, _) => await _checkRightsUniquenessHelper.IsRightsSetUniqueAsync(rightIds))
-        .WithMessage("Set of rights must be unique.");
-
-      RuleForEach(rightsIds => rightsIds)
-        .MustAsync(async (id, _) => (await _memoryCacheHelper.GetRightIdsAsync()).Contains(id))
-        .WithMessage("Element: {CollectionIndex} of rights list is not correct.");
-    }
+    RuleForEach(rightsIds => rightsIds)
+      .MustAsync(async (id, _) => (await _memoryCacheHelper.GetRightIdsAsync()).Contains(id))
+      .WithMessage("Element: {CollectionIndex} of rights list is not correct.");
   }
 }

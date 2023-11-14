@@ -4,32 +4,31 @@ using UniversityHelper.RightsService.Mappers.Models.Interfaces;
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace UniversityHelper.RightsService.Mappers.Models
+namespace UniversityHelper.RightsService.Mappers.Models;
+
+public class RoleInfoMapper : IRoleInfoMapper
 {
-  public class RoleInfoMapper : IRoleInfoMapper
+  private readonly IRoleLocalizationInfoMapper _roleLocalizationInfoMapper;
+
+  public RoleInfoMapper(IRoleLocalizationInfoMapper roleLocalizationInfoMapper)
   {
-    private readonly IRoleLocalizationInfoMapper _roleLocalizationInfoMapper;
+    _roleLocalizationInfoMapper = roleLocalizationInfoMapper;
+  }
 
-    public RoleInfoMapper(IRoleLocalizationInfoMapper roleLocalizationInfoMapper)
+  public RoleInfo Map(DbRole dbRole, List<RightInfo> rights, List<UserInfo> userInfos)
+  {
+    if (dbRole == null)
     {
-      _roleLocalizationInfoMapper = roleLocalizationInfoMapper;
+      return null;
     }
 
-    public RoleInfo Map(DbRole dbRole, List<RightInfo> rights, List<UserInfo> userInfos)
+    return new RoleInfo
     {
-      if (dbRole == null)
-      {
-        return null;
-      }
-
-      return new RoleInfo
-      {
-        Id = dbRole.Id,
-        IsActive = dbRole.IsActive,
-        CreatedBy = userInfos?.FirstOrDefault(x => x.Id == dbRole.CreatedBy),
-        Rights = rights,
-        Localizations = dbRole.RoleLocalizations.Select(_roleLocalizationInfoMapper.Map).ToList()
-      };
-    }
+      Id = dbRole.Id,
+      IsActive = dbRole.IsActive,
+      CreatedBy = userInfos?.FirstOrDefault(x => x.Id == dbRole.CreatedBy),
+      Rights = rights,
+      Localizations = dbRole.RoleLocalizations.Select(_roleLocalizationInfoMapper.Map).ToList()
+    };
   }
 }

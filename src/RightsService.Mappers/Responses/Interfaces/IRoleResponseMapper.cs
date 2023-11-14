@@ -5,11 +5,10 @@ using UniversityHelper.Models.Broker.Models.User;
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Responses;
 
-namespace UniversityHelper.RightsService.Mappers.Responses.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Responses.Interfaces;
+
+[AutoInject]
+public interface IRoleResponseMapper
 {
-  [AutoInject]
-  public interface IRoleResponseMapper
-  {
-    RoleResponse Map(DbRole role, List<DbRightLocalization> rights, List<UserData> users);
-  }
+  RoleResponse Map(DbRole role, List<DbRightLocalization> rights, List<UserData> users);
 }

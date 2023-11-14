@@ -1,10 +1,9 @@
-﻿namespace UniversityHelper.RightsService.Models.Dto.Models
+﻿namespace UniversityHelper.RightsService.Models.Dto.Models;
+
+public record RightInfo
 {
-  public record RightInfo
-  {
-    public int RightId { get; set; }
-    public string Locale { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-  }
+  public int RightId { get; set; }
+  public string Locale { get; set; }
+  public string Name { get; set; }
+  public string Description { get; set; }
 }

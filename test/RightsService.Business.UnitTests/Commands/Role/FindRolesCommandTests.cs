@@ -5,28 +5,27 @@ using Moq.AutoMock;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace UniversityHelper.RightsService.Business.Commands.Role
+namespace UniversityHelper.RightsService.Business.Commands.Role;
+
+class FindRolesCommandTests
 {
-    class FindRolesCommandTests
-    {
-        private IEnumerable<DbRoleLocalization> _dbRoles;
-        private IEnumerable<UserInfo> _rolesInfo;
+  private IEnumerable<DbRoleLocalization> _dbRoles;
+  private IEnumerable<UserInfo> _rolesInfo;
 
-        private AutoMocker _mocker;
-        private IFindRolesCommand _command;
+  private AutoMocker _mocker;
+  private IFindRolesCommand _command;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-        }
+  [OneTimeSetUp]
+  public void OneTimeSetUp()
+  {
+  }
 
-        [SetUp]
-        public void SetUp()
-        {
-            _mocker = new AutoMocker();
-            _command = _mocker.CreateInstance<IFindRolesCommand>();
-        }
+  [SetUp]
+  public void SetUp()
+  {
+    _mocker = new AutoMocker();
+    _command = _mocker.CreateInstance<IFindRolesCommand>();
+  }
 
-        // TODO add tests
-    }
+  // TODO add tests
 }

@@ -14,72 +14,71 @@ using UniversityHelper.RightsService.Models.Dto.Constants;
 using UniversityHelper.RightsService.Validation.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace UniversityHelper.RightsService.Business.Commands.Role
+namespace UniversityHelper.RightsService.Business.Commands.Role;
+
+public class EditRoleStatusCommand : IEditRoleStatusCommand
 {
-  public class EditRoleStatusCommand : IEditRoleStatusCommand
+  private readonly IRoleRepository _roleRepository;
+  private readonly IAccessValidator _accessValidator;
+  private readonly IEditRoleStatusRequestValidator _validator;
+  private readonly IResponseCreator _responseCreator;
+  private readonly IMemoryCache _cache;
+
+  private async Task UpdateCacheAsync(Guid roleId, bool isActive)
   {
-    private readonly IRoleRepository _roleRepository;
-    private readonly IAccessValidator _accessValidator;
-    private readonly IEditRoleStatusRequestValidator _validator;
-    private readonly IResponseCreator _responseCreator;
-    private readonly IMemoryCache _cache;
+    List<(Guid roleId, bool isActive, IEnumerable<int> rights)> rolesRights = _cache.Get<List<(Guid, bool, IEnumerable<int>)>>(CacheKeys.RolesRights);
 
-    private async Task UpdateCacheAsync(Guid roleId, bool isActive)
+    if (rolesRights == null)
     {
-      List<(Guid roleId, bool isActive, IEnumerable<int> rights)> rolesRights = _cache.Get<List<(Guid, bool, IEnumerable<int>)>>(CacheKeys.RolesRights);
+      List<DbRole> roles = await _roleRepository.GetAllWithRightsAsync();
 
-      if (rolesRights == null)
-      {
-        List<DbRole> roles = await _roleRepository.GetAllWithRightsAsync();
-
-        rolesRights = roles.Select(x => (x.Id, x.IsActive, x.RolesRights.Select(x => x.RightId))).ToList();
-      }
-      else
-      {
-        (Guid roleId, bool isActive, IEnumerable<int> rights) oldRole = rolesRights.FirstOrDefault(x => x.roleId == roleId);
-        rolesRights.Remove(oldRole);
-        rolesRights.Add((roleId, isActive, oldRole.rights));
-      }
-
-      _cache.Set(CacheKeys.RolesRights, rolesRights);
+      rolesRights = roles.Select(x => (x.Id, x.IsActive, x.RolesRights.Select(x => x.RightId))).ToList();
+    }
+    else
+    {
+      (Guid roleId, bool isActive, IEnumerable<int> rights) oldRole = rolesRights.FirstOrDefault(x => x.roleId == roleId);
+      rolesRights.Remove(oldRole);
+      rolesRights.Add((roleId, isActive, oldRole.rights));
     }
 
-    public EditRoleStatusCommand(
-      IRoleRepository roleRepository,
-      IAccessValidator accessValidator,
-      IEditRoleStatusRequestValidator validator,
-      IResponseCreator responseCreator,
-      IMemoryCache cache)
+    _cache.Set(CacheKeys.RolesRights, rolesRights);
+  }
+
+  public EditRoleStatusCommand(
+    IRoleRepository roleRepository,
+    IAccessValidator accessValidator,
+    IEditRoleStatusRequestValidator validator,
+    IResponseCreator responseCreator,
+    IMemoryCache cache)
+  {
+    _roleRepository = roleRepository;
+    _accessValidator = accessValidator;
+    _validator = validator;
+    _responseCreator = responseCreator;
+    _cache = cache;
+  }
+
+  public async Task<OperationResultResponse<bool>> ExecuteAsync(Guid roleId, bool isActive)
+  {
+    if (!await _accessValidator.IsAdminAsync())
     {
-      _roleRepository = roleRepository;
-      _accessValidator = accessValidator;
-      _validator = validator;
-      _responseCreator = responseCreator;
-      _cache = cache;
+      return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
     }
 
-    public async Task<OperationResultResponse<bool>> ExecuteAsync(Guid roleId, bool isActive)
+    ValidationResult result = await _validator.ValidateAsync((roleId, isActive));
+    if (!result.IsValid)
     {
-      if (!await _accessValidator.IsAdminAsync())
-      {
-        return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
-      }
-
-      ValidationResult result = await _validator.ValidateAsync((roleId, isActive));
-      if (!result.IsValid)
-      {
-        return _responseCreator.CreateFailureResponse<bool>(
-          HttpStatusCode.BadRequest,
-          result.Errors.Select(x => x.ErrorMessage).ToList());
-      }
-
-      OperationResultResponse<bool> response = new();
-
-      response.Body = await _roleRepository.EditStatusAsync(roleId, isActive);
-
-      await UpdateCacheAsync(roleId, isActive);
-
-      return response;
+      return _responseCreator.CreateFailureResponse<bool>(
+        HttpStatusCode.BadRequest,
+        result.Errors.Select(x => x.ErrorMessage).ToList());
     }
+
+    OperationResultResponse<bool> response = new();
+
+    response.Body = await _roleRepository.EditStatusAsync(roleId, isActive);
+
+    await UpdateCacheAsync(roleId, isActive);
+
+    return response;
   }
 }

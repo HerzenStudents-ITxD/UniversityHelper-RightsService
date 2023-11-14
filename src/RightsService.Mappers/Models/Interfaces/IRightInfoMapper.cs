@@ -2,11 +2,10 @@
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace UniversityHelper.RightsService.Mappers.Models.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Models.Interfaces;
+
+[AutoInject]
+public interface IRightInfoMapper
 {
-  [AutoInject]
-  public interface IRightInfoMapper
-  {
-    RightInfo Map(DbRightLocalization value);
-  }
+  RightInfo Map(DbRightLocalization value);
 }

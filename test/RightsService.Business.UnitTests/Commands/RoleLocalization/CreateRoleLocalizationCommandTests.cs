@@ -19,226 +19,225 @@ using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
 
-namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization
+namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization;
+
+public class CreateRoleLocalizationCommandTests
 {
-  public class CreateRoleLocalizationCommandTests
+  private const string RequestIsNotCorrectErrorMessage = "Request is not correct.";
+  private const string RoleIdCantBeEmptyErrorMessage = "RoleId can't be empty.";
+  private const string NotEnoughRightsErrorMessage = "Not enough rights.";
+  private readonly List<string> _roleCanNotBeEmptyErrorList = new() { RoleIdCantBeEmptyErrorMessage };
+
+  private AutoMocker _autoMocker;
+  private ICreateRoleLocalizationCommand _command;
+
+  private CreateRoleLocalizationRequest _request;
+  private DbRoleLocalization _dbRoleLocalization;
+
+  private void Verifiable(
+    Times accessValidatorTimes,
+    Times requestValidatorTimes,
+    Times mapperTimes,
+    Times repositoryTimes)
   {
-    private const string RequestIsNotCorrectErrorMessage = "Request is not correct.";
-    private const string RoleIdCantBeEmptyErrorMessage = "RoleId can't be empty.";
-    private const string NotEnoughRightsErrorMessage = "Not enough rights.";
-    private readonly List<string> _roleCanNotBeEmptyErrorList = new() { RoleIdCantBeEmptyErrorMessage };
+    _autoMocker.Verify<IAccessValidator>(
+      x => x.IsAdminAsync(It.IsAny<Guid?>()),
+      accessValidatorTimes);
 
-    private AutoMocker _autoMocker;
-    private ICreateRoleLocalizationCommand _command;
+    _autoMocker.Verify<ICreateRoleLocalizationRequestValidator>(
+      x => x.ValidateAsync(It.IsAny<CreateRoleLocalizationRequest>(), It.IsAny<CancellationToken>()),
+      requestValidatorTimes);
 
-    private CreateRoleLocalizationRequest _request;
-    private DbRoleLocalization _dbRoleLocalization;
+    _autoMocker.Verify<IDbRoleLocalizationMapper>(
+      x => x.Map(It.IsAny<CreateRoleLocalizationRequest>()),
+      mapperTimes);
 
-    private void Verifiable(
-      Times accessValidatorTimes,
-      Times requestValidatorTimes,
-      Times mapperTimes,
-      Times repositoryTimes)
+    _autoMocker.Verify<IRoleLocalizationRepository>(
+      x => x.CreateAsync(It.IsAny<DbRoleLocalization>()),
+      repositoryTimes);
+
+    _autoMocker.Resolvers.Clear();
+  }
+
+  [OneTimeSetUp]
+  public void OneTimeSetUp()
+  {
+    _autoMocker = new AutoMocker();
+    _command = _autoMocker.CreateInstance<CreateRoleLocalizationCommand>();
+
+    _request = new CreateRoleLocalizationRequest
     {
-      _autoMocker.Verify<IAccessValidator>(
-        x => x.IsAdminAsync(It.IsAny<Guid?>()),
-        accessValidatorTimes);
+      RoleId = Guid.NewGuid(),
+      Locale = "EN",
+      Name = "Name",
+      Description = "Description"
+    };
 
-      _autoMocker.Verify<ICreateRoleLocalizationRequestValidator>(
-        x => x.ValidateAsync(It.IsAny<CreateRoleLocalizationRequest>(), It.IsAny<CancellationToken>()),
-        requestValidatorTimes);
-
-      _autoMocker.Verify<IDbRoleLocalizationMapper>(
-        x => x.Map(It.IsAny<CreateRoleLocalizationRequest>()),
-        mapperTimes);
-
-      _autoMocker.Verify<IRoleLocalizationRepository>(
-        x => x.CreateAsync(It.IsAny<DbRoleLocalization>()),
-        repositoryTimes);
-
-      _autoMocker.Resolvers.Clear();
-    }
-
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
+    _dbRoleLocalization = new DbRoleLocalization
     {
-      _autoMocker = new AutoMocker();
-      _command = _autoMocker.CreateInstance<CreateRoleLocalizationCommand>();
+      Id = Guid.NewGuid(),
+      RoleId = _request.RoleId.Value,
+      Locale = _request.Locale,
+      Name = _request.Name,
+      Description = _request.Description,
+      CreatedBy = Guid.NewGuid(),
+      CreatedAtUtc = DateTime.Now,
+      IsActive = true
+    };
 
-      _request = new CreateRoleLocalizationRequest
+    _autoMocker
+      .Setup<IHttpContextAccessor, int>(a => a.HttpContext.Response.StatusCode)
+      .Returns(200);
+
+    _autoMocker
+      .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
+        x => x.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest, It.IsAny<List<string>>()))
+      .Returns(new OperationResultResponse<Guid?>
       {
-        RoleId = Guid.NewGuid(),
-        Locale = "EN",
-        Name = "Name",
-        Description = "Description"
-      };
+        Errors = new() { RequestIsNotCorrectErrorMessage }
+      });
 
-      _dbRoleLocalization = new DbRoleLocalization
+    _autoMocker
+      .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
+        x => x.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest, _roleCanNotBeEmptyErrorList))
+      .Returns(new OperationResultResponse<Guid?>
       {
-        Id = Guid.NewGuid(),
-        RoleId = _request.RoleId.Value,
-        Locale = _request.Locale,
-        Name = _request.Name,
-        Description = _request.Description,
-        CreatedBy = Guid.NewGuid(),
-        CreatedAtUtc = DateTime.Now,
-        IsActive = true
-      };
+        Errors = new() { RoleIdCantBeEmptyErrorMessage }
+      });
 
-      _autoMocker
-        .Setup<IHttpContextAccessor, int>(a => a.HttpContext.Response.StatusCode)
-        .Returns(200);
+    _autoMocker
+      .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
+        x => x.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden, It.IsAny<List<string>>()))
+      .Returns(new OperationResultResponse<Guid?>
+      {
+        Errors = new() { NotEnoughRightsErrorMessage }
+      });
+  }
 
-      _autoMocker
-        .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
-          x => x.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest, It.IsAny<List<string>>()))
-        .Returns(new OperationResultResponse<Guid?>
-        {
-          Errors = new() { RequestIsNotCorrectErrorMessage }
-        });
+  [SetUp]
+  public void SetUp()
+  {
+    _autoMocker.GetMock<IAccessValidator>().Reset();
+    _autoMocker.GetMock<ICreateRoleLocalizationRequestValidator>().Reset();
+    _autoMocker.GetMock<IDbRoleLocalizationMapper>().Reset();
+    _autoMocker.GetMock<IRoleLocalizationRepository>().Reset();
 
-      _autoMocker
-        .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
-          x => x.CreateFailureResponse<Guid?>(HttpStatusCode.BadRequest, _roleCanNotBeEmptyErrorList))
-        .Returns(new OperationResultResponse<Guid?>
-        {
-          Errors = new() { RoleIdCantBeEmptyErrorMessage }
-        });
+    _autoMocker
+      .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
+      .ReturnsAsync(true);
 
-      _autoMocker
-        .Setup<IResponseCreator, OperationResultResponse<Guid?>>(
-          x => x.CreateFailureResponse<Guid?>(HttpStatusCode.Forbidden, It.IsAny<List<string>>()))
-        .Returns(new OperationResultResponse<Guid?>
-        {
-          Errors = new() { NotEnoughRightsErrorMessage }
-        });
-    }
+    _autoMocker
+      .Setup<ICreateRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_request, default).Result.IsValid)
+      .Returns(true);
 
-    [SetUp]
-    public void SetUp()
+    _autoMocker
+      .Setup<IDbRoleLocalizationMapper, DbRoleLocalization>(x => x.Map(_request))
+      .Returns(_dbRoleLocalization);
+
+    _autoMocker
+      .Setup<IRoleLocalizationRepository, Task<Guid?>>(x => x.CreateAsync(_dbRoleLocalization))
+      .ReturnsAsync(_dbRoleLocalization.Id);
+  }
+
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenUserIsNotAdminAsync()
+  {
+    _autoMocker
+      .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
+      .ReturnsAsync(false);
+
+    OperationResultResponse<Guid?> expectedResponse = new()
     {
-      _autoMocker.GetMock<IAccessValidator>().Reset();
-      _autoMocker.GetMock<ICreateRoleLocalizationRequestValidator>().Reset();
-      _autoMocker.GetMock<IDbRoleLocalizationMapper>().Reset();
-      _autoMocker.GetMock<IRoleLocalizationRepository>().Reset();
+      Errors = new List<string> { NotEnoughRightsErrorMessage }
+    };
 
-      _autoMocker
-        .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
-        .ReturnsAsync(true);
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
 
-      _autoMocker
-        .Setup<ICreateRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_request, default).Result.IsValid)
-        .Returns(true);
+    Verifiable(
+      Times.Once(),
+      Times.Never(),
+      Times.Never(),
+      Times.Never());
+  }
 
-      _autoMocker
-        .Setup<IDbRoleLocalizationMapper, DbRoleLocalization>(x => x.Map(_request))
-        .Returns(_dbRoleLocalization);
-
-      _autoMocker
-        .Setup<IRoleLocalizationRepository, Task<Guid?>>(x => x.CreateAsync(_dbRoleLocalization))
-        .ReturnsAsync(_dbRoleLocalization.Id);
-    }
-
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenUserIsNotAdminAsync()
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenRoleIdIsNullAsync()
+  {
+    CreateRoleLocalizationRequest requestWithoutRole = new CreateRoleLocalizationRequest
     {
-      _autoMocker
-        .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
-        .ReturnsAsync(false);
+      RoleId = null
+    };
 
-      OperationResultResponse<Guid?> expectedResponse = new()
-      {
-        Errors = new List<string> { NotEnoughRightsErrorMessage }
-      };
-
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
-
-      Verifiable(
-        Times.Once(),
-        Times.Never(),
-        Times.Never(),
-        Times.Never());
-    }
-
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenRoleIdIsNullAsync()
+    OperationResultResponse<Guid?> expectedResponse = new()
     {
-      CreateRoleLocalizationRequest requestWithoutRole = new CreateRoleLocalizationRequest
-      {
-        RoleId = null
-      };
+      Errors = new List<string> { RoleIdCantBeEmptyErrorMessage }
+    };
 
-      OperationResultResponse<Guid?> expectedResponse = new()
-      {
-        Errors = new List<string> { RoleIdCantBeEmptyErrorMessage }
-      };
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(requestWithoutRole));
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(requestWithoutRole));
+    Verifiable(
+      Times.Once(),
+      Times.Never(),
+      Times.Never(),
+      Times.Never());
+  }
 
-      Verifiable(
-        Times.Once(),
-        Times.Never(),
-        Times.Never(),
-        Times.Never());
-    }
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenValidationIsFailedAsync()
+  {
+    _autoMocker
+      .Setup<ICreateRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_request, default).Result.IsValid)
+      .Returns(false);
 
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenValidationIsFailedAsync()
+    OperationResultResponse<Guid?> expectedResponse = new()
     {
-      _autoMocker
-        .Setup<ICreateRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_request, default).Result.IsValid)
-        .Returns(false);
+      Errors = new List<string> { RequestIsNotCorrectErrorMessage }
+    };
 
-      OperationResultResponse<Guid?> expectedResponse = new()
-      {
-        Errors = new List<string> { RequestIsNotCorrectErrorMessage }
-      };
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Never(),
+      Times.Never());
+  }
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Never(),
-        Times.Never());
-    }
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenRepositoryReturnNullAsync()
+  {
+    _autoMocker
+      .Setup<IRoleLocalizationRepository, Task<Guid?>>(x => x.CreateAsync(_dbRoleLocalization))
+      .ReturnsAsync((Guid?)null);
 
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenRepositoryReturnNullAsync()
+    OperationResultResponse<Guid?> expectedResponse = new()
     {
-      _autoMocker
-        .Setup<IRoleLocalizationRepository, Task<Guid?>>(x => x.CreateAsync(_dbRoleLocalization))
-        .ReturnsAsync((Guid?)null);
+      Errors = new List<string>()
+    };
 
-      OperationResultResponse<Guid?> expectedResponse = new()
-      {
-        Errors = new List<string>()
-      };
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Once(),
+      Times.Once());
+  }
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Once(),
-        Times.Once());
-    }
-
-    [Test]
-    public async Task ShouldCreateRoleLocalizationSuccessfullyAsync()
+  [Test]
+  public async Task ShouldCreateRoleLocalizationSuccessfullyAsync()
+  {
+    OperationResultResponse<Guid?> expectedResponse = new()
     {
-      OperationResultResponse<Guid?> expectedResponse = new()
-      {
-        Body = _dbRoleLocalization.Id
-      };
+      Body = _dbRoleLocalization.Id
+    };
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Once(),
-        Times.Once());
-    }
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Once(),
+      Times.Once());
   }
 }

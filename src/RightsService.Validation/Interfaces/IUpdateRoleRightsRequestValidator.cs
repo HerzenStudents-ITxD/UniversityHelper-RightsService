@@ -2,10 +2,9 @@
 using UniversityHelper.Core.Attributes;
 using UniversityHelper.RightsService.Models.Dto.Requests;
 
-namespace UniversityHelper.RightsService.Validation.Interfaces
+namespace UniversityHelper.RightsService.Validation.Interfaces;
+
+[AutoInject]
+public interface IUpdateRoleRightsRequestValidator : IValidator<UpdateRoleRightsRequest>
 {
-  [AutoInject]
-  public interface IUpdateRoleRightsRequestValidator : IValidator<UpdateRoleRightsRequest>
-  {
-  }
 }

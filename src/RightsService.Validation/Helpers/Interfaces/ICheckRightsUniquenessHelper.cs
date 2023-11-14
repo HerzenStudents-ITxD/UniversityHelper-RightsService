@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using UniversityHelper.Core.Attributes;
 
-namespace UniversityHelper.RightsService.Validation.Helpers.Interfaces
+namespace UniversityHelper.RightsService.Validation.Helpers.Interfaces;
+
+[AutoInject]
+public interface ICheckRightsUniquenessHelper
 {
-  [AutoInject]
-  public interface ICheckRightsUniquenessHelper
-  {
-    Task<bool> IsRightsSetUniqueAsync(IEnumerable<int> rightsIds);
-  }
+  Task<bool> IsRightsSetUniqueAsync(IEnumerable<int> rightsIds);
 }

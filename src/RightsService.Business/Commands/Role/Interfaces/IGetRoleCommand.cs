@@ -4,11 +4,10 @@ using UniversityHelper.RightsService.Models.Dto.Requests.Filters;
 using UniversityHelper.RightsService.Models.Dto.Responses;
 using System.Threading.Tasks;
 
-namespace UniversityHelper.RightsService.Business.Role.Interfaces
+namespace UniversityHelper.RightsService.Business.Role.Interfaces;
+
+[AutoInject]
+public interface IGetRoleCommand
 {
-  [AutoInject]
-    public interface IGetRoleCommand
-    {
-      Task<OperationResultResponse<RoleResponse>> ExecuteAsync(GetRoleFilter filter);
-    }
+  Task<OperationResultResponse<RoleResponse>> ExecuteAsync(GetRoleFilter filter);
 }

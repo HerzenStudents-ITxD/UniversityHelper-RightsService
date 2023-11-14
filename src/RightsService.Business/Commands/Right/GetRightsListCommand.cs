@@ -10,34 +10,33 @@ using UniversityHelper.RightsService.Data.Interfaces;
 using UniversityHelper.RightsService.Mappers.Models.Interfaces;
 using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace UniversityHelper.RightsService.Business.Commands.Right
+namespace UniversityHelper.RightsService.Business.Commands.Right;
+
+/// <inheritdoc cref="IGetRightsListCommand"/>
+public class GetRightsListCommand : IGetRightsListCommand
 {
-  /// <inheritdoc cref="IGetRightsListCommand"/>
-  public class GetRightsListCommand : IGetRightsListCommand
+  private readonly IRightLocalizationRepository _repository;
+  private readonly IRightInfoMapper _mapper;
+  private readonly IAccessValidator _accessValidator;
+  private readonly IResponseCreator _responseCreator;
+
+  public GetRightsListCommand(
+    IRightLocalizationRepository repository,
+    IRightInfoMapper mapper,
+    IAccessValidator accessValidator,
+    IResponseCreator responseCreator)
   {
-    private readonly IRightLocalizationRepository _repository;
-    private readonly IRightInfoMapper _mapper;
-    private readonly IAccessValidator _accessValidator;
-    private readonly IResponseCreator _responseCreator;
+    _repository = repository;
+    _mapper = mapper;
+    _accessValidator = accessValidator;
+    _responseCreator = responseCreator;
+  }
 
-    public GetRightsListCommand(
-      IRightLocalizationRepository repository,
-      IRightInfoMapper mapper,
-      IAccessValidator accessValidator,
-      IResponseCreator responseCreator)
-    {
-      _repository = repository;
-      _mapper = mapper;
-      _accessValidator = accessValidator;
-      _responseCreator = responseCreator;
-    }
-
-    public async Task<OperationResultResponse<List<RightInfo>>> ExecuteAsync(string locale)
-    {
-      return await _accessValidator.IsAdminAsync()
-        ? new OperationResultResponse<List<RightInfo>>(
-          body: (await _repository.GetRightsListAsync(locale))?.Select(_mapper.Map).ToList())
-        : _responseCreator.CreateFailureResponse<List<RightInfo>>(HttpStatusCode.Forbidden);
-    }
+  public async Task<OperationResultResponse<List<RightInfo>>> ExecuteAsync(string locale)
+  {
+    return await _accessValidator.IsAdminAsync()
+      ? new OperationResultResponse<List<RightInfo>>(
+        body: (await _repository.GetRightsListAsync(locale))?.Select(_mapper.Map).ToList())
+      : _responseCreator.CreateFailureResponse<List<RightInfo>>(HttpStatusCode.Forbidden);
   }
 }

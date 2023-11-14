@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UniversityHelper.RightsService.Models.Dto.Models
+namespace UniversityHelper.RightsService.Models.Dto.Models;
+
+public record RoleInfo
 {
-  public record RoleInfo
-  {
-    public Guid Id { get; set; }
-    public bool IsActive { get; set; }
-    public UserInfo CreatedBy { get; set; }
-    public IEnumerable<RightInfo> Rights { get; set; }
-    public IEnumerable<RoleLocalizationInfo> Localizations { get; set; }
-  }
+  public Guid Id { get; set; }
+  public bool IsActive { get; set; }
+  public UserInfo CreatedBy { get; set; }
+  public IEnumerable<RightInfo> Rights { get; set; }
+  public IEnumerable<RoleLocalizationInfo> Localizations { get; set; }
 }

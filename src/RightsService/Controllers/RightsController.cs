@@ -5,18 +5,17 @@ using UniversityHelper.RightsService.Business.Commands.Right.Interfaces;
 using UniversityHelper.RightsService.Models.Dto.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace UniversityHelper.RightsService.Controllers
+namespace UniversityHelper.RightsService.Controllers;
+
+[Route("[controller]")]
+[ApiController]
+public class RightsController : ControllerBase
 {
-  [Route("[controller]")]
-  [ApiController]
-  public class RightsController : ControllerBase
+  [HttpGet("get")]
+  public async Task<OperationResultResponse<List<RightInfo>>> Get(
+    [FromQuery] string locale,
+    [FromServices] IGetRightsListCommand command)
   {
-    [HttpGet("get")]
-    public async Task<OperationResultResponse<List<RightInfo>>> Get(
-      [FromQuery] string locale,
-      [FromServices] IGetRightsListCommand command)
-    {
-      return await command.ExecuteAsync(locale);
-    }
+    return await command.ExecuteAsync(locale);
   }
 }

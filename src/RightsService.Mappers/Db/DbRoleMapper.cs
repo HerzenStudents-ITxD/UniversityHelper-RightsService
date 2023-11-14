@@ -6,45 +6,44 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 
-namespace UniversityHelper.RightsService.Mappers.Db
+namespace UniversityHelper.RightsService.Mappers.Db;
+
+public class DbRoleMapper : IDbRoleMapper
 {
-  public class DbRoleMapper : IDbRoleMapper
+  private readonly IHttpContextAccessor _httpContextAccessor;
+  private readonly IDbRoleLocalizationMapper _localizationMapper;
+
+  public DbRoleMapper(
+    IHttpContextAccessor httpContextAccessor,
+    IDbRoleLocalizationMapper localizationMapper)
   {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IDbRoleLocalizationMapper _localizationMapper;
+    _httpContextAccessor = httpContextAccessor;
+    _localizationMapper = localizationMapper;
+  }
 
-    public DbRoleMapper(
-      IHttpContextAccessor httpContextAccessor,
-      IDbRoleLocalizationMapper localizationMapper)
+  public DbRole Map(CreateRoleRequest request)
+  {
+    if (request == null)
     {
-      _httpContextAccessor = httpContextAccessor;
-      _localizationMapper = localizationMapper;
+      return null;
     }
 
-    public DbRole Map(CreateRoleRequest request)
+    var roleId = Guid.NewGuid();
+    var creatorId = _httpContextAccessor.HttpContext.GetUserId();
+
+    return new DbRole
     {
-      if (request == null)
+      Id = roleId,
+      CreatedBy = creatorId,
+      IsActive = true,
+      RoleLocalizations = request.Localizations.Select(rl => _localizationMapper.Map(rl, roleId)).ToList(),
+      RolesRights = request.Rights?.Select(x => new DbRoleRight
       {
-        return null;
-      }
-
-      var roleId = Guid.NewGuid();
-      var creatorId = _httpContextAccessor.HttpContext.GetUserId();
-
-      return new DbRole
-      {
-        Id = roleId,
+        Id = Guid.NewGuid(),
+        RoleId = roleId,
         CreatedBy = creatorId,
-        IsActive = true,
-        RoleLocalizations = request.Localizations.Select(rl => _localizationMapper.Map(rl, roleId)).ToList(),
-        RolesRights = request.Rights?.Select(x => new DbRoleRight
-        {
-          Id = Guid.NewGuid(),
-          RoleId = roleId,
-          CreatedBy = creatorId,
-          RightId = x,
-        }).ToList()
-      };
-    }
+        RightId = x,
+      }).ToList()
+    };
   }
 }

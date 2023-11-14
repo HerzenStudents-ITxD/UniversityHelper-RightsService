@@ -22,174 +22,173 @@ using Moq.AutoMock;
 using Newtonsoft.Json.Serialization;
 using NUnit.Framework;
 
-namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization
+namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization;
+
+public class EditRoleLocalizationCommandTests
 {
-  public class EditRoleLocalizationCommandTests
+  private const string RequestIsNotCorrectErrorMessage = "Request is not correct.";
+  private const string NotEnoughRightsErrorMessage = "Not enough rights.";
+
+  private AutoMocker _autoMocker;
+  private IEditRoleLocalizationCommand _command;
+
+  private JsonPatchDocument<EditRoleLocalizationRequest> _request;
+  private Guid _roleLocalizationId;
+  private (Guid, JsonPatchDocument<EditRoleLocalizationRequest>) _tuple;
+  private JsonPatchDocument<DbRoleLocalization> _dbRoleLocalization;
+
+  private void Verifiable(
+    Times accessValidatorTimes,
+    Times requestValidatorTimes,
+    Times mapperTimes,
+    Times repositoryTimes)
   {
-    private const string RequestIsNotCorrectErrorMessage = "Request is not correct.";
-    private const string NotEnoughRightsErrorMessage = "Not enough rights.";
+    _autoMocker.Verify<IAccessValidator>(
+      x => x.IsAdminAsync(It.IsAny<Guid?>()),
+      accessValidatorTimes);
 
-    private AutoMocker _autoMocker;
-    private IEditRoleLocalizationCommand _command;
+    _autoMocker.Verify<IEditRoleLocalizationRequestValidator>(
+      x => x.ValidateAsync(_tuple, It.IsAny<CancellationToken>()),
+      requestValidatorTimes);
 
-    private JsonPatchDocument<EditRoleLocalizationRequest> _request;
-    private Guid _roleLocalizationId;
-    private (Guid, JsonPatchDocument<EditRoleLocalizationRequest>) _tuple;
-    private JsonPatchDocument<DbRoleLocalization> _dbRoleLocalization;
+    _autoMocker.Verify<IPatchDbRoleLocalizationMapper>(
+      x => x.Map(_request),
+      mapperTimes);
 
-    private void Verifiable(
-      Times accessValidatorTimes,
-      Times requestValidatorTimes,
-      Times mapperTimes,
-      Times repositoryTimes)
-    {
-      _autoMocker.Verify<IAccessValidator>(
-        x => x.IsAdminAsync(It.IsAny<Guid?>()),
-        accessValidatorTimes);
+    _autoMocker.Verify<IRoleLocalizationRepository>(
+      x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization),
+      repositoryTimes);
 
-      _autoMocker.Verify<IEditRoleLocalizationRequestValidator>(
-        x => x.ValidateAsync(_tuple, It.IsAny<CancellationToken>()),
-        requestValidatorTimes);
+    _autoMocker.Resolvers.Clear();
+  }
 
-      _autoMocker.Verify<IPatchDbRoleLocalizationMapper>(
-        x => x.Map(_request),
-        mapperTimes);
+  [OneTimeSetUp]
+  public void OneTimeSetUp()
+  {
+    _autoMocker = new AutoMocker();
+    _command = _autoMocker.CreateInstance<EditRoleLocalizationCommand>();
 
-      _autoMocker.Verify<IRoleLocalizationRepository>(
-        x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization),
-        repositoryTimes);
+    _request = new JsonPatchDocument<EditRoleLocalizationRequest>(
+      new List<Operation<EditRoleLocalizationRequest>>(),
+      new CamelCasePropertyNamesContractResolver());
 
-      _autoMocker.Resolvers.Clear();
-    }
+    _dbRoleLocalization = new();
+    _roleLocalizationId = Guid.NewGuid();
+    _tuple = (_roleLocalizationId, _request);
 
-    [OneTimeSetUp]
-    public void OneTimeSetUp()
-    {
-      _autoMocker = new AutoMocker();
-      _command = _autoMocker.CreateInstance<EditRoleLocalizationCommand>();
+    _autoMocker
+      .Setup<IHttpContextAccessor, int>(a => a.HttpContext.Response.StatusCode)
+      .Returns(200);
 
-      _request = new JsonPatchDocument<EditRoleLocalizationRequest>(
-        new List<Operation<EditRoleLocalizationRequest>>(),
-        new CamelCasePropertyNamesContractResolver());
-
-      _dbRoleLocalization = new();
-      _roleLocalizationId = Guid.NewGuid();
-      _tuple = (_roleLocalizationId, _request);
-
-      _autoMocker
-        .Setup<IHttpContextAccessor, int>(a => a.HttpContext.Response.StatusCode)
-        .Returns(200);
-
-      _autoMocker
-        .Setup<IResponseCreator, OperationResultResponse<bool>>(
-          x => x.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, It.IsAny<List<string>>()))
-        .Returns(new OperationResultResponse<bool>
-        {
-          Errors = new() { RequestIsNotCorrectErrorMessage }
-        });
-
-      _autoMocker
-        .Setup<IResponseCreator, OperationResultResponse<bool>>(
-          x => x.CreateFailureResponse<bool>(HttpStatusCode.Forbidden, It.IsAny<List<string>>()))
-        .Returns(new OperationResultResponse<bool>
-        {
-          Errors = new() { NotEnoughRightsErrorMessage }
-        });
-    }
-
-    [SetUp]
-    public void SetUp()
-    {
-      _autoMocker.GetMock<IAccessValidator>().Reset();
-      _autoMocker.GetMock<IEditRoleLocalizationRequestValidator>().Reset();
-      _autoMocker.GetMock<IPatchDbRoleLocalizationMapper>().Reset();
-      _autoMocker.GetMock<IRoleLocalizationRepository>().Reset();
-
-      _autoMocker
-        .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
-        .ReturnsAsync(true);
-
-      _autoMocker
-        .Setup<IEditRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_tuple, default).Result.IsValid)
-        .Returns(true);
-
-      _autoMocker
-        .Setup<IPatchDbRoleLocalizationMapper, JsonPatchDocument<DbRoleLocalization>>(x => x.Map(_request))
-        .Returns(_dbRoleLocalization);
-
-      _autoMocker
-        .Setup<IRoleLocalizationRepository, Task<bool>>(x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization))
-        .ReturnsAsync(true);
-    }
-
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenUserIsNotAdminAsync()
-    {
-      _autoMocker
-        .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
-        .ReturnsAsync(false);
-
-      OperationResultResponse<bool> expectedResponse = new()
+    _autoMocker
+      .Setup<IResponseCreator, OperationResultResponse<bool>>(
+        x => x.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, It.IsAny<List<string>>()))
+      .Returns(new OperationResultResponse<bool>
       {
-        Errors = new List<string> { NotEnoughRightsErrorMessage }
-      };
+        Errors = new() { RequestIsNotCorrectErrorMessage }
+      });
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_roleLocalizationId, _request));
-
-      Verifiable(
-        Times.Once(),
-        Times.Never(),
-        Times.Never(),
-        Times.Never());
-    }
-
-    [Test]
-    public async Task ShouldReturnFailedResponseWhenValidationIsFailedAsync()
-    {
-      _autoMocker
-        .Setup<IEditRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_tuple, default).Result.IsValid)
-        .Returns(false);
-
-      OperationResultResponse<bool> expectedResponse = new()
+    _autoMocker
+      .Setup<IResponseCreator, OperationResultResponse<bool>>(
+        x => x.CreateFailureResponse<bool>(HttpStatusCode.Forbidden, It.IsAny<List<string>>()))
+      .Returns(new OperationResultResponse<bool>
       {
-        Errors = new List<string> { RequestIsNotCorrectErrorMessage }
-      };
+        Errors = new() { NotEnoughRightsErrorMessage }
+      });
+  }
 
-      SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_roleLocalizationId, _request));
+  [SetUp]
+  public void SetUp()
+  {
+    _autoMocker.GetMock<IAccessValidator>().Reset();
+    _autoMocker.GetMock<IEditRoleLocalizationRequestValidator>().Reset();
+    _autoMocker.GetMock<IPatchDbRoleLocalizationMapper>().Reset();
+    _autoMocker.GetMock<IRoleLocalizationRepository>().Reset();
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Never(),
-        Times.Never());
-    }
+    _autoMocker
+      .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
+      .ReturnsAsync(true);
 
-    [Test]
-    public async Task ShouldReturnFalseBodyWhenRepositoryReturnsFalseAsync()
+    _autoMocker
+      .Setup<IEditRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_tuple, default).Result.IsValid)
+      .Returns(true);
+
+    _autoMocker
+      .Setup<IPatchDbRoleLocalizationMapper, JsonPatchDocument<DbRoleLocalization>>(x => x.Map(_request))
+      .Returns(_dbRoleLocalization);
+
+    _autoMocker
+      .Setup<IRoleLocalizationRepository, Task<bool>>(x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization))
+      .ReturnsAsync(true);
+  }
+
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenUserIsNotAdminAsync()
+  {
+    _autoMocker
+      .Setup<IAccessValidator, Task<bool>>(x => x.IsAdminAsync(It.IsAny<Guid?>()))
+      .ReturnsAsync(false);
+
+    OperationResultResponse<bool> expectedResponse = new()
     {
-      _autoMocker
-        .Setup<IRoleLocalizationRepository, Task<bool>>(x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization))
-        .ReturnsAsync(false);
+      Errors = new List<string> { NotEnoughRightsErrorMessage }
+    };
 
-      Assert.IsFalse((await _command.ExecuteAsync(_roleLocalizationId, _request)).Body);
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_roleLocalizationId, _request));
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Once(),
-        Times.Once());
-    }
+    Verifiable(
+      Times.Once(),
+      Times.Never(),
+      Times.Never(),
+      Times.Never());
+  }
 
-    [Test]
-    public async Task ShouldCreateRoleLocalizationSuccessfullyAsync()
+  [Test]
+  public async Task ShouldReturnFailedResponseWhenValidationIsFailedAsync()
+  {
+    _autoMocker
+      .Setup<IEditRoleLocalizationRequestValidator, bool>(x => x.ValidateAsync(_tuple, default).Result.IsValid)
+      .Returns(false);
+
+    OperationResultResponse<bool> expectedResponse = new()
     {
-      Assert.IsTrue((await _command.ExecuteAsync(_roleLocalizationId, _request)).Body);
+      Errors = new List<string> { RequestIsNotCorrectErrorMessage }
+    };
 
-      Verifiable(
-        Times.Once(),
-        Times.Once(),
-        Times.Once(),
-        Times.Once());
-    }
+    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_roleLocalizationId, _request));
+
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Never(),
+      Times.Never());
+  }
+
+  [Test]
+  public async Task ShouldReturnFalseBodyWhenRepositoryReturnsFalseAsync()
+  {
+    _autoMocker
+      .Setup<IRoleLocalizationRepository, Task<bool>>(x => x.EditRoleLocalizationAsync(_roleLocalizationId, _dbRoleLocalization))
+      .ReturnsAsync(false);
+
+    Assert.IsFalse((await _command.ExecuteAsync(_roleLocalizationId, _request)).Body);
+
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Once(),
+      Times.Once());
+  }
+
+  [Test]
+  public async Task ShouldCreateRoleLocalizationSuccessfullyAsync()
+  {
+    Assert.IsTrue((await _command.ExecuteAsync(_roleLocalizationId, _request)).Body);
+
+    Verifiable(
+      Times.Once(),
+      Times.Once(),
+      Times.Once(),
+      Times.Once());
   }
 }

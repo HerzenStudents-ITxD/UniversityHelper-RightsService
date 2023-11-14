@@ -2,11 +2,10 @@
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Models;
 
-namespace UniversityHelper.RightsService.Mappers.Models.Interfaces
+namespace UniversityHelper.RightsService.Mappers.Models.Interfaces;
+
+[AutoInject]
+public interface IRoleLocalizationInfoMapper
 {
-  [AutoInject]
-  public interface IRoleLocalizationInfoMapper
-  {
-    RoleLocalizationInfo Map(DbRoleLocalization dbRoleLocalization);
-  }
+  RoleLocalizationInfo Map(DbRoleLocalization dbRoleLocalization);
 }

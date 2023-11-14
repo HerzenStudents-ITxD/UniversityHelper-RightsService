@@ -5,11 +5,10 @@ using UniversityHelper.Core.Responses;
 using UniversityHelper.RightsService.Models.Dto.Requests;
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace UniversityHelper.RightsService.Business.Commands.RoleLocalization.Interfaces
+namespace UniversityHelper.RightsService.Business.Commands.RoleLocalization.Interfaces;
+
+[AutoInject]
+public interface IEditRoleLocalizationCommand
 {
-  [AutoInject]
-  public interface IEditRoleLocalizationCommand
-  {
-    Task<OperationResultResponse<bool>> ExecuteAsync(Guid roleLocalizationId, JsonPatchDocument<EditRoleLocalizationRequest> request);
-  }
+  Task<OperationResultResponse<bool>> ExecuteAsync(Guid roleLocalizationId, JsonPatchDocument<EditRoleLocalizationRequest> request);
 }

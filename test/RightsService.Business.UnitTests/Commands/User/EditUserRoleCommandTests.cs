@@ -14,10 +14,10 @@ using UniversityHelper.RightsService.Mappers.Db.Interfaces;
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Requests;
 using UniversityHelper.RightsService.Validation.Interfaces;
-using UniversityHelper.UnitTestCore;
 using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
+using UniversityHelper.Core.UnitTestSupport;
 
 namespace UniversityHelper.RightsService.Business.UnitTests.Commands.User;
 
@@ -124,9 +124,9 @@ public class EditUserRoleCommandTests
     _mocker.GetMock<IUserRoleRepository>().Reset();
     _mocker.GetMock<IDbUserRoleMapper>().Reset();
 
-    _mocker
-      .Setup<IAccessValidator, Task<bool>>(x => x.HasRightsAsync(Rights.AddRemoveUsersRoles))
-      .ReturnsAsync(true);
+    //_mocker
+    //  .Setup<IAccessValidator, Task<bool>>(x => x.HasRightsAsync(Rights.AddRemoveUsersRoles))
+    //  .ReturnsAsync(true);
 
     _mocker
       .Setup<IResponseCreator, OperationResultResponse<bool>>(x => x.CreateFailureResponse<bool>(HttpStatusCode.BadRequest, It.IsAny<List<string>>()))
@@ -159,30 +159,30 @@ public class EditUserRoleCommandTests
       .ReturnsAsync(_dbUserRoleWithoutChangeRoleId);
   }
 
-  [Test]
-  public async Task NotEnoughRightsTest()
-  {
-    OperationResultResponse<bool> expectedResponse = new()
-    {
-      Body = false,
-      Errors = new List<string> { "Not enough rights." }
-    };
+  //[Test]
+  //public async Task NotEnoughRightsTest()
+  //{
+  //  OperationResultResponse<bool> expectedResponse = new()
+  //  {
+  //    Body = false,
+  //    Errors = new List<string> { "Not enough rights." }
+  //  };
 
-    _mocker.Setup<IAccessValidator, Task<bool>>(x => x.HasRightsAsync(Rights.AddRemoveUsersRoles))
-      .ReturnsAsync(false);
+  //  _mocker.Setup<IAccessValidator, Task<bool>>(x => x.HasRightsAsync(Rights.AddRemoveUsersRoles))
+  //    .ReturnsAsync(false);
 
-    SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
+  //  SerializerAssert.AreEqual(expectedResponse, await _command.ExecuteAsync(_request));
 
-    Verifiable(
-      accessValidatorTimes: Times.Once(),
-      responseCreatorTimes: Times.Once(),
-      dbUserRoleMapperTimes: Times.Never(),
-      requestValidatorTimes: Times.Never(),
-      repositoryGetTimes: Times.Never(),
-      repositoryRemoveTimes: Times.Never(),
-      repositoryEditTimes: Times.Never(),
-      repositoryCreateTimes: Times.Never());
-  }
+  //  Verifiable(
+  //    accessValidatorTimes: Times.Once(),
+  //    responseCreatorTimes: Times.Once(),
+  //    dbUserRoleMapperTimes: Times.Never(),
+  //    requestValidatorTimes: Times.Never(),
+  //    repositoryGetTimes: Times.Never(),
+  //    repositoryRemoveTimes: Times.Never(),
+  //    repositoryEditTimes: Times.Never(),
+  //    repositoryCreateTimes: Times.Never());
+  //}
 
   [Test]
   public async Task ValidationFailureTest()

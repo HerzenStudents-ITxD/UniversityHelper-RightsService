@@ -11,10 +11,10 @@ using UniversityHelper.RightsService.Data.Interfaces;
 using UniversityHelper.RightsService.Mappers.Models.Interfaces;
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Models;
-using UniversityHelper.UnitTestCore;
 using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
+using UniversityHelper.Core.UnitTestSupport;
 
 namespace UniversityHelper.RightsService.Business.UnitTests.Commands.Right;
 

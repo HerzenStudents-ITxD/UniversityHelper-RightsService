@@ -1,7 +1,8 @@
 ﻿using System;
-using HerzenHelper.RightsService.Models.Db;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
+using UniversityHelper.RightsService.Data.Provider.MsSql.Ef;
+using UniversityHelper.RightsService.Models.Db;
 
 namespace HerzenHelper.RightsService.Data.Provider.MsSql.Ef.Migrations;
 

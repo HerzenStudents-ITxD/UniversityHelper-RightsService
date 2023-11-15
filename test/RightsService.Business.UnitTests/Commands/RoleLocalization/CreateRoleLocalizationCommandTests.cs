@@ -13,11 +13,11 @@ using UniversityHelper.RightsService.Mappers.Db.Interfaces;
 using UniversityHelper.RightsService.Models.Db;
 using UniversityHelper.RightsService.Models.Dto.Requests;
 using UniversityHelper.RightsService.Validation.Interfaces;
-using UniversityHelper.UnitTestCore;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
+using UniversityHelper.Core.UnitTestSupport;
 
 namespace UniversityHelper.RightsService.Business.UnitTests.Commands.RoleLocalization;
 

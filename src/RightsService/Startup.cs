@@ -24,6 +24,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace UniversityHelper.RightsService;
 
@@ -51,7 +52,7 @@ public class Startup : BaseApiInfo
       .Get<RabbitMqConfig>();
 
     //App.Release.BreakChange.Version
-    Version = "2.0.1.0";
+    Version = "2.0.2.0";
     Description = "RightsService is an API intended to work with the user rights.";
     StartTime = DateTime.UtcNow;
     ApiName = $"UniversityHelper - {_serviceInfoConfig.Name}";
@@ -128,6 +129,18 @@ public class Startup : BaseApiInfo
       .AddHealthChecks()
       .AddSqlServer(dbConnectionString)
       .AddRabbitMqCheck();
+
+    services.AddSwaggerGen(options =>
+    {
+      options.SwaggerDoc($"{Version}", new OpenApiInfo
+      {
+        Version = Version,
+        Title = _serviceInfoConfig.Name,
+        Description = Description
+      });
+
+      options.EnableAnnotations();
+    });
   }
 
   public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -164,5 +177,11 @@ public class Startup : BaseApiInfo
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
       });
     });
+
+    app.UseSwagger()
+      .UseSwaggerUI(options =>
+      {
+        options.SwaggerEndpoint($"/swagger/{Version}/swagger.json", $"{Version}");
+      });
   }
 }

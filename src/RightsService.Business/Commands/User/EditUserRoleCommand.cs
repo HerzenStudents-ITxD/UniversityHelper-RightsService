@@ -39,7 +39,7 @@ public class EditUserRoleCommand : IEditUserRoleCommand
 
   public async Task<OperationResultResponse<bool>> ExecuteAsync(EditUserRoleRequest request)
   {
-    if (!await _accessValidator.HasRightsAsync(Rights.AddGetEditRemoveUserRoles))
+    if (!await _accessValidator.HasRightsAsync(Rights.RightsServiceAdmin))
     {
       return _responseCreator.CreateFailureResponse<bool>(HttpStatusCode.Forbidden);
     }
